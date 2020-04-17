@@ -4,19 +4,13 @@ import Scroll from './Scroll';
 
 import avatar from '../assets/images/avatar.png';
 import config from '../../config';
+import sections from './sections';
 
 export class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabs: [
-        { content: 'About', href: 'about' },
-        { content: 'Experience', href: 'experience' },
-        { content: 'Education', href: 'education' },
-        { content: 'Skills', href: 'skills' },
-        { content: 'Interests', href: 'interests' },
-        { content: 'Awards', href: 'awards' },
-      ],
+      tabs: sections.map(({id, name}) => ({content: name, href: id}))
     };
   }
 
