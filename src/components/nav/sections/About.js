@@ -16,7 +16,7 @@ export default ({firstName, lastName, address, email, byline, socialLinks}) => (
       {socialLinks.map(social => {
         const { icon, url } = social;
         return (
-          <a key={url} href={url}>
+          <a key={url} href={url} target="_blank">
             <i className={`fab ${icon}`}></i>
           </a>
         );

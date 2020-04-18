@@ -12,21 +12,6 @@ export default [
     Component: About
   },
   {
-    id: 'experience',
-    name: 'Experience',
-    Component: Experience
-  },
-  {
-    id: 'education',
-    name: 'Education',
-    Component: Education
-  },
-  {
-    id: 'skills',
-    name: 'Skills',
-    Component: Skills
-  },
-  {
     id: 'projects',
     name: 'Projects',
     Component: Projects
@@ -35,5 +20,20 @@ export default [
     id: 'blog',
     name: 'Blog',
     Component: Blog
+  },
+  {
+    id: 'experience',
+    name: 'Experience',
+    Component: Experience
+  },
+  {
+    id: 'skills',
+    name: 'Skills',
+    Component: Skills
+  },
+  {
+    id: 'education',
+    name: 'Education',
+    Component: Education
   }
 ]

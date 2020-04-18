@@ -1,32 +1,51 @@
-import React from 'react';
+import React, { useMemo } from 'react'
+import { graphql } from 'gatsby'
+// import Layout from '../components/Layout'
+import Sidebar from '../components/layout/Sidebar'
+import sections from '../components/nav/sections'
+import config from '../../config'
 
-import Layout from '../components/Layout';
-import sections from '../components/sections'
+export default ({ data }) => {
+  const siteData = useMemo(() => ({
+    ...data,
+    posts: data?.allMarkdownRemark?.edges
+  }), [ data ])
 
-// import { Link } from 'gatsby';
-import Sidebar from '../components/Sidebar';
-import config from '../../config';
-
-const IndexPage = () => (
-  <Layout>
-    <Sidebar />
-    <div className="container-fluid p-0">
+  return (
+    <>
       {sections.map(({id, Component}) => (
-        <>
+        <React.Fragment key={id}>
         <section
-          key={id}
           id={id}
           className="resume-section p-3 p-lg-5 d-flex align-items-center"
         >
           <div className="w-100">
-            <Component {...config}/>
+            <Component {...config} {...siteData}/>
           </div>
         </section>
         <hr className="m-0"/>
-        </>
+        </React.Fragment>
       ))}
-    </div>
-  </Layout>
-);
+    </>
+  )
+}
 
-export default IndexPage;
+export const pageQuery = graphql`
+  query {
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
+        }
+      }
+    }
+  }
+`

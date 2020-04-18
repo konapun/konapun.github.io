@@ -1,17 +1,22 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React, { useContext, useEffect } from 'react'
+import NavContext from '../components/nav/NavContext'
+import { Link, graphql } from 'gatsby'
 
-// import Bio from "../components/bio"
-import Layout from "../components/Layout"
-import SEO from "../components/SEO"
+import SEO from '../components/SEO'
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+export default ({ data, pageContext, location }) => {
+  const { setNavigation } = useContext(NavContext)
+
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
+  useEffect(() => {
+    setNavigation(nav)
+  }, [nav])
+
   return (
-    <Layout location={location} title={siteTitle}>
+    <>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
@@ -26,10 +31,6 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           </p>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr/>
-        {/* <footer>
-          <Bio />
-        </footer> */}
       </article>
 
       <nav>
@@ -44,25 +45,36 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+              <Link to={`/blog/${previous.fields.slug}`} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next">
+              <Link to={`/blog/${next.fields.slug}`} rel="next">
                 {next.frontmatter.title} →
               </Link>
             )}
           </li>
         </ul>
       </nav>
-    </Layout>
+    </>
   )
 }
 
-export default BlogPostTemplate
+const nav = [
+  {
+    id: 'home',
+    name: 'Home',
+    Component: 'SEO'
+  },
+  {
+    id: 'one',
+    name: 'ONE',
+    Component: SEO
+  }
+]
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
