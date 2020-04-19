@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[konapun.github.io]]></title><description><![CDATA[Personal site for Bremen Braun (@konapun)]]></description><link>http://konapun.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 19 Apr 2020 19:16:28 GMT</lastBuildDate><item><title><![CDATA[Hello World]]></title><description><![CDATA[Figured I’d throw a quick site together to host project demos. This site is
+powered by Gatsby and is based on a modified mashup of
+gatsby…]]></description><link>http://konapun.github.io/hello-world/</link><guid isPermaLink="false">http://konapun.github.io/hello-world/</guid><pubDate>Sun, 19 Apr 2020 03:55:25 GMT</pubDate><content:encoded>&lt;p&gt;Figured I’d throw a quick site together to host project demos. This site is
+powered by Gatsby and is based on a modified mashup of
+&lt;a href=&quot;https://www.gatsbyjs.org/starters/anubhavsrivastava/gatsby-starter-resume/&quot;&gt;gatsby-starter-resume&lt;/a&gt; and
+&lt;a href=&quot;https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-blog/&quot;&gt;gatsby-starter-blog&lt;/a&gt;
+with some (ongoing) improvements in usability and code quality.&lt;/p&gt;
+&lt;p&gt;This site is strictly utilitarian; I’m a web developer in my daily job but my
+hobbyist projects tend to be more CLI/framework oriented. As a result, this site
+isn’t meant to be a showcase of my webdev skills so please keep that in mind if
+you’re browsing this site’s source code.&lt;/p&gt;</content:encoded></item></channel></rss>
