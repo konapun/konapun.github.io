@@ -30,28 +30,30 @@ export default () => (
         <i className="fab fa-sass"></i>
       </li>
       <li className="list-inline-item">
-        <i className="fab fa-less"></i>
-      </li>
-      <li className="list-inline-item">
-        <i className="fab fa-wordpress"></i>
-      </li>
-      <li className="list-inline-item">
-        <i className="fab fa-gulp"></i>
-      </li>
-      <li className="list-inline-item">
-        <i className="fab fa-grunt"></i>
-      </li>
-      <li className="list-inline-item">
         <i className="fab fa-npm"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-unity"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-python"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-php"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-git"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-docker"></i>
+      </li>
+      <li className="list-inline-item">
+        <i className="fab fa-linux"></i>
       </li>
     </ul>
 
     <div className="subheading mb-3">Workflow</div>
     <ul className="fa-ul mb-0">
-      <li>
-        <i className="fa-li fa fa-check"></i>
-        Mobile-First, Responsive Design
-      </li>
       <li>
         <i className="fa-li fa fa-check"></i>
         Cross Browser Testing &amp; Debugging

@@ -6,7 +6,7 @@ export default ({ experience, itemsBeforeOverflow }) => (
     <h2 className="mb-5">Experience</h2>
 
     <Overflow max={itemsBeforeOverflow}>
-      {experience.map(({ company, title, description, bullets = [], start, end }, index) => (
+      {experience.map(({ company, title, description, bullets = [], technologies = [], start, end }, index) => (
         <div key={index} className="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
           <div className="resume-content">
             <h3 className="mb-0">{title}</h3>

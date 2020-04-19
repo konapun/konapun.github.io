@@ -25,7 +25,16 @@ $green: #28a745 !default;
 $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
 
-$primary: $purple !default;
+// Monokai
+$mk-gray: #1a1d1e;
+$mk-pink: #f92672;
+$mk-blue: #66d9ef;
+$mk-green: #a6e22e;
+$mk-orange: #fd971f;
+$mk-yellow: #E6DB74;
+$mk-purple: #AE81FF;
+
+$primary: $mk-pink !default;
 $secondary: $gray-600 !default;
 $success: $green !default;
 $info: $cyan !default;
