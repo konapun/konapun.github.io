@@ -26,7 +26,7 @@ export default function Sidebar () {
       className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
       id="sideNav"
     >
-      <a className="navbar-brand" href="#page-top">
+      <Link className="navbar-brand" to="/#page-top">
         <span className="d-block d-lg-none">
           {firstName} {lastName}
         </span>
@@ -37,7 +37,7 @@ export default function Sidebar () {
             alt=""
           />
         </span>
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"

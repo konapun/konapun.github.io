@@ -1,13 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link, graphql } from 'gatsby'
+import NavContext from '../components/nav/NavContext'
 import SEO from '../components/SEO'
 
 export default ({ data }) => {
   const tags = data.allMarkdownRemark.group // TODO: use these
   const posts = data.allMarkdownRemark.edges
+  const { setNavigation } = useContext(NavContext)
+
+  const nav = [
+    {
+      id: 'home',
+      name: 'Home',
+      href: '/'
+    },
+    ...posts.map(({ node }) => ({
+      id: node.fields.slug,
+      name: node.frontmatter.title,
+      href: `/blog${node.fields.slug}`
+    }))
+  ]
+
+  useEffect(() => {
+    setNavigation(nav)
+  }, [ setNavigation ])
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 p-5">
       <SEO title='All posts'/>
       <h2>All Posts</h2>
       {posts.map(({ node }) => {

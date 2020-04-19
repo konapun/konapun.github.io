@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import NavContext from '../components/nav/NavContext'
 import { Link, graphql } from 'gatsby'
+import NavContext from '../components/nav/NavContext'
 
 import SEO from '../components/SEO'
 
@@ -9,11 +9,16 @@ export default ({ data, pageContext, location }) => {
   const { previous, next } = pageContext
   const { setNavigation } = useContext(NavContext)
 
-  const nav = [
+  const nav = [ // FIXME: this is duplicated in the blog landing page. clean this up
     {
       id: 'home',
       name: 'Home',
       href: '/'
+    },
+    {
+      id: 'blog',
+      name: 'All Posts',
+      href: '/blog'
     },
     ...allPosts.edges.map(({ node }) => ({
       id: node.fields.slug,
@@ -24,10 +29,10 @@ export default ({ data, pageContext, location }) => {
 
   useEffect(() => {
     setNavigation(nav)
-  }, [ setNavigation ])
+  }, [ nav, setNavigation ])
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 p-5">
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}

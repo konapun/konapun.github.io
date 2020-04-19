@@ -14,7 +14,7 @@ export default function Overflow({ max, children }) {
       {items}
       {children.length > max && (
         <div className='text-md-right'>
-          <button type='button' className='btn btn-link' onClick={handleClick}>{expanded ? 'less' : 'more'}</button>
+          <button type='button' className='btn btn-link text-primary' onClick={handleClick}>{expanded ? 'less' : 'more'}</button>
         </div>
       )}
     </div>

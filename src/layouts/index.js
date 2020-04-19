@@ -5,7 +5,7 @@ import DataProvider from '../components/data/DataProvider'
 import NavProvider from '../components/nav/NavProvider'
 import Sidebar from '../components/layout/Sidebar'
 
-import '../assets/sass/resume.scss';
+import '../assets/sass/resume.scss'
 
 export default ({ children }) => (
   <StaticQuery
@@ -32,7 +32,7 @@ export default ({ children }) => (
           </Helmet>
           <div className='main-body'>
             <Sidebar/>
-            <div className='container-fluid p-4'>
+            <div className='container-fluid p-0'>
               {children}
             </div>
           </div>
