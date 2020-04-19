@@ -17,6 +17,10 @@ export default function Sidebar () {
     setExpanded(!expanded)
   }, [expanded, setExpanded])
 
+  const handleNavbarCollapsed = useCallback(() => {
+    setExpanded(false)
+  }, [setExpanded])
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
@@ -54,7 +58,7 @@ export default function Sidebar () {
           className="navbar-nav"
         >
           {tabs.map(({ id, name, href }) => (
-            <li className="nav-item" key={id}>
+            <li className="nav-item" key={id} onClick={handleNavbarCollapsed}>
               {href ? (
                 <Link className="nav-link" to={href}>
                   {name}
