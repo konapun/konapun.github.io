@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from 'react'
+import React, { useState, useMemo, useCallback, useContext } from 'react'
 import { Link } from 'gatsby'
 import Scrollspy from 'react-scrollspy'
 import DataContext from '../data/DataContext'
@@ -9,6 +9,13 @@ import avatar from './sidebar/avatar.png'
 export default function Sidebar () {
   const { firstName, lastName } = useContext(DataContext)
   const { navigation: tabs } = useContext(NavContext)
+  const [ expanded, setExpanded ] = useState(false)
+
+  const computedNavbarClasses = useMemo(() => expanded ? 'show' : '', [ expanded ])
+
+  const handleNavbarToggle = useCallback(() => {
+    setExpanded(!expanded)
+  }, [expanded, setExpanded])
 
   return (
     <nav
@@ -35,10 +42,11 @@ export default function Sidebar () {
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        onClick={handleNavbarToggle}
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <div className={`collapse navbar-collapse ${computedNavbarClasses}`} id="navbarSupportedContent">
         <Scrollspy
           items={tabs.map(s => s.id)}
           currentClassName="active"
