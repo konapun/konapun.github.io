@@ -7,7 +7,7 @@ export default function Overflow({ max, children }) {
     setExpanded(!expanded)
   }, [ expanded, setExpanded ])
 
-  const items = useMemo(() => expanded ? children : children.slice(0, max), [ expanded ])
+  const items = useMemo(() => expanded ? children : children.slice(0, max), [ expanded, children, max ])
 
   return (
     <div>

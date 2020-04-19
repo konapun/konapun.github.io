@@ -5,27 +5,43 @@ import { Link, graphql } from 'gatsby'
 import SEO from '../components/SEO'
 
 export default ({ data, pageContext, location }) => {
+  const { markdownRemark: post, allMarkdownRemark: allPosts } = data
+  const { previous, next } = pageContext
   const { setNavigation } = useContext(NavContext)
 
-  const post = data.markdownRemark
-  const siteTitle = data.site.siteMetadata.title
-  const { previous, next } = pageContext
+  const nav = [
+    {
+      id: 'home',
+      name: 'Home',
+      href: '/'
+    },
+    ...allPosts.edges.map(({ node }) => ({
+      id: node.fields.slug,
+      name: node.frontmatter.title,
+      href: `/blog${node.fields.slug}`
+    }))
+  ]
 
   useEffect(() => {
     setNavigation(nav)
-  }, [nav])
+  }, [ setNavigation ])
 
   return (
-    <>
+    <div className="mt-5">
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
       <article>
-        <header>
+        <header className="mb-5">
           <h1>
             {post.frontmatter.title}
           </h1>
+          {post.frontmatter.description && (
+            <h4>
+              {post.frontmatter.description}
+            </h4>
+          )}
           <p>
             {post.frontmatter.date}
           </p>
@@ -59,30 +75,12 @@ export default ({ data, pageContext, location }) => {
           </li>
         </ul>
       </nav>
-    </>
+    </div>
   )
 }
 
-const nav = [
-  {
-    id: 'home',
-    name: 'Home',
-    Component: 'SEO'
-  },
-  {
-    id: 'one',
-    name: 'ONE',
-    Component: SEO
-  }
-]
-
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
@@ -91,6 +89,21 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+      }
+    }
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
+        }
       }
     }
   }

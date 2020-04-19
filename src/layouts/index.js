@@ -30,9 +30,9 @@ export default ({ children }) => (
           >
             <html lang="en" />
           </Helmet>
-          <div className={'main-body'}>
+          <div className='main-body'>
             <Sidebar/>
-            <div className="container-fluid p-0">
+            <div className='container-fluid p-4'>
               {children}
             </div>
           </div>

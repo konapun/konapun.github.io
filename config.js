@@ -8,9 +8,9 @@ module.exports = {
   manifestThemeColor: '#663399',
   manifestDisplay: 'standalone',
   manifestIcon: 'src/assets/img/website-icon.png',
-  pathPrefix: '/resume/', // This path is subpath of your hosting https://domain/portfolio
-  blogPrefix: '/blog/',
-  itemsBeforeOverflow: 4,
+  pathPrefix: '/resume', // This path is subpath of your hosting https://domain/portfolio
+  blogPrefix: '/blog',
+  itemsBeforeOverflow: 3,
   firstName: 'Bremen',
   lastName: 'Braun',
   byline: 'The perfect blend of technology and magic',
@@ -37,7 +37,10 @@ module.exports = {
     {
       company: 'Trimble',
       title: 'Software Engineer III',
-      description: '',
+      description: 'This is the description',
+      bullets: [
+        'Did a thing'
+      ],
       start: 'August 2018',
       end: 'Present'
     },

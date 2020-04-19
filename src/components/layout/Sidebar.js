@@ -1,4 +1,5 @@
 import React, { useMemo, useContext } from 'react'
+import { Link } from 'gatsby'
 import Scrollspy from 'react-scrollspy'
 import DataContext from '../data/DataContext'
 import NavContext from '../nav/NavContext'
@@ -7,8 +8,7 @@ import avatar from './sidebar/avatar.png'
 
 export default function Sidebar () {
   const { firstName, lastName } = useContext(DataContext)
-  const { navigation } = useContext(NavContext)
-  const tabs = useMemo(() => navigation.map(({id, name}) => ({content: name, href: id})), [navigation])
+  const { navigation: tabs } = useContext(NavContext)
 
   return (
     <nav
@@ -40,23 +40,26 @@ export default function Sidebar () {
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <Scrollspy
-          items={tabs.map(s => s.href)}
+          items={tabs.map(s => s.id)}
           currentClassName="active"
           offset={-300}
           className="navbar-nav"
         >
-          {tabs.map((tab, i) => {
-            const { href, content } = tab
-            return (
-              <li className="nav-item" key={href}>
-                <Scroll type="id" element={href}>
-                  <a className="nav-link" href={`#${href}`}>
-                    {content}
+          {tabs.map(({ id, name, href }) => (
+            <li className="nav-item" key={id}>
+              {href ? (
+                <Link className="nav-link" to={href}>
+                  {name}
+                </Link>
+              ) : (
+                <Scroll type="id" element={id}>
+                  <a className="nav-link" href={`#${id}`}>
+                    {name}
                   </a>
                 </Scroll>
-              </li>
-            )
-          })}
+              )}
+            </li>
+          ))}
         </Scrollspy>
       </div>
     </nav>
