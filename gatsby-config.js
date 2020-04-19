@@ -5,7 +5,8 @@ module.exports = {
   siteMetadata: {
     title: config.siteTitle,
     description: config.siteDescription,
-    social: config.socialLinks.reduce((acc, {name, url}) => ({...acc, [name.toLowerCase()]: url}), {})
+    social: config.socialLinks.reduce((acc, {name, url}) => ({...acc, [name.toLowerCase()]: url}), {}),
+    siteUrl: 'http://konapun.github.io/'
   },
   plugins: [
     {
