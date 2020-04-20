@@ -4,7 +4,7 @@ import NavContext from '../components/nav/NavContext'
 
 import SEO from '../components/SEO'
 
-export default ({ data, pageContext, location }) => {
+export default ({ data, pageContext }) => {
   const { markdownRemark: post, allMarkdownRemark: allPosts } = data
   const { previous, next } = pageContext
   const { setNavigation } = useContext(NavContext)
