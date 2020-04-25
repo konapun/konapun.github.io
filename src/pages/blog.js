@@ -23,7 +23,7 @@ export default ({ data }) => {
 
   useEffect(() => {
     setNavigation(nav)
-  }, [ setNavigation ])
+  }, [ setNavigation, nav ])
 
   return (
     <div className="mt-5 p-5">

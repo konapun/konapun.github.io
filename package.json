@@ -12,6 +12,7 @@
     "email": "konapun.zero@gmail.com"
   },
   "scripts": {
+    "start": "yarn develop",
     "develop": "gatsby develop",
     "build": "npm run clean && gatsby build",
     "deploy": "npm run clean && gatsby build && gh-pages -d public -b master",

@@ -1,9 +1,5 @@
-const blog = require('./create_pages/blog')
+const createPages = require('./node/createPages')
 
-exports.createPages = async args => {
-  blog.createPage(args)
-}
-
-exports.onCreateNode = args => {
-  blog.onCreateNode(args)
+module.exports = {
+  ...createPages
 }

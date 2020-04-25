@@ -28,7 +28,7 @@ export default ({ posts = [], itemsBeforeOverflow }) => {
           </article>
         )
       })}
-      <div class='text-md-right'>
+      <div className='text-md-right'>
         <Link to='/blog'>
           All posts
         </Link>

@@ -13,7 +13,7 @@ export default ({ children }) => {
     navigation,
     setNavigation,
     setDefaultNavigation
-  }), [ navigation, setNavigation ])
+  }), [ navigation, setNavigation, setDefaultNavigation ])
 
   return (
     <NavContext.Provider value={contextValue}>
