@@ -33,7 +33,7 @@ const Line = styled.div`
 `
 const Prompt = styled.span`
   ${text}
-  padding: 0 4px;
+  padding: 0 4px 0 0;
 `
 
 const Input = styled.input`

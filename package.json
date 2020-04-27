@@ -22,6 +22,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@orbital-frame/core": "^0.0.2-alpha.1",
+    "@orbital-frame/core-commands": "^0.0.2-alpha.1",
+    "@orbital-frame/plugin-error-trap": "^0.0.2-alpha.1",
+    "@orbital-frame/plugin-did-you-mean": "^0.0.2-alpha.1",
     "gatsby": "^2.20.23",
     "gatsby-cli": "^2.11.11",
     "gatsby-image": "^2.3.1",

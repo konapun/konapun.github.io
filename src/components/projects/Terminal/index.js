@@ -9,11 +9,14 @@ const noop = () => {}
 export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 100 }) => {
   const [ history, setHistory ] = useState([])
 
-  const handleEnter = useCallback(event => {
+  const handleEnter = useCallback(async event => {
     const { value } = event.target
 
-    setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), value ])
-    onEnter(value)
+    setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), `${prompt} ${value}` ])
+    const result = await onEnter(value)
+    if (result) {
+      setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), result ])
+    }
   }, [ onEnter, maxScrollback, history, setHistory ])
 
   return (
