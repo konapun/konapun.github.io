@@ -1,24 +1,40 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-export default ({ prompt, onEnter }) => {
-  const [ value, setValue ] = useState('')
+const noop = () => {}
 
-  const handleChange = useCallback(({target}) => {
-    setValue(target.value)
-  }, [ setValue ])
+export default ({ value = '', prompt = '>', onEnter = noop, onArrowUp = noop, onArrowDown = noop, focused = false, onChange = noop, onFocus = noop, onBlur = noop }) => {
+  const inputRef = useRef(null)
 
   const handleKeyDown = useCallback(event => {
-    if (event.key === 'Enter') {
-      onEnter(event)
-      setValue('')
+    switch (event.key) {
+      case 'Enter':
+        return onEnter(event)
+      case 'ArrowUp':
+        return onArrowUp(event)
+      case 'ArrowDown':
+        return onArrowDown(event)
     }
-  }, [ onEnter, setValue ])
+  }, [ onEnter, onArrowUp, onArrowDown ])
+
+  useEffect(() => {
+    if (focused && inputRef) {
+      inputRef.current.focus()
+    }
+  }, [ focused, inputRef ])
 
   return (
     <Line>
       <Prompt>{prompt}</Prompt>
-      <Input type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown}/>
+      <Input
+        ref={inputRef}
+        type="text"
+        value={value}
+        onChange={onChange}
+        onKeyDown={handleKeyDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
     </Line>
   )
 }

@@ -92,8 +92,8 @@ const CloseButton = styled(TitleBarControlButton)`
 `
 const WindowBody = styled.div`
   ${Text}
-  margin: 8px;
-  height: calc(100% - 38px);
+  margin: 2px;
+  height: calc(100% - 25px);
 
   &::-webkit-scrollbar {
     width: 16px;

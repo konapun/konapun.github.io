@@ -24,8 +24,8 @@
   "dependencies": {
     "@orbital-frame/core": "^0.0.2-alpha.1",
     "@orbital-frame/core-commands": "^0.0.2-alpha.1",
-    "@orbital-frame/plugin-error-trap": "^0.0.2-alpha.1",
     "@orbital-frame/plugin-did-you-mean": "^0.0.2-alpha.1",
+    "@orbital-frame/plugin-error-trap": "^0.0.2-alpha.1",
     "gatsby": "^2.20.23",
     "gatsby-cli": "^2.11.11",
     "gatsby-image": "^2.3.1",
@@ -45,6 +45,7 @@
     "gatsby-source-filesystem": "^2.2.2",
     "gatsby-transformer-remark": "^2.7.1",
     "gatsby-transformer-sharp": "^2.4.3",
+    "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",

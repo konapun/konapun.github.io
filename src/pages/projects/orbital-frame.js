@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import Terminal from '../../components/projects/Terminal'
 import orbitalFrame from '@orbital-frame/core'
@@ -58,21 +58,26 @@ const createWebAdapter = ({ handleMessage }) => {
 }
 
 export default () => {
-  const [ webAdapter, notify ] = useMemo(() => createWebAdapter({
-    handleMessage: message => console.log('HANDLING MESSAGE:', message)
-  }), [])
+  const [ history, setHistory ] = useState([])
+  const [ adapter, setAdapter ] = useState({})
 
-  const handleEnter = useCallback(value => notify(value), [ notify ])
-
-  const bot = useMemo(() => orbitalFrame(webAdapter, {
-    name: 'jehuty',
-    commands: coreCommands,
-    plugins: [ didYouMean, errorTrap ]
-  }), [webAdapter])
+  const handleEnter = useCallback(value => adapter && adapter.notify(value), [ adapter ])
 
   useEffect(() => {
+    const [ webAdapter, notifyAdapter ] = createWebAdapter({
+      handleMessage: message => {
+        setHistory([ ...history, message ])
+      }
+    })
+
+    setAdapter({ notify: notifyAdapter })
+    const bot = orbitalFrame(webAdapter, {
+      name: 'jehuty',
+      commands: coreCommands,
+      plugins: [ didYouMean, errorTrap ]
+    })
     bot.run()
-  }, [ bot ])
+  }, [])
 
   return (
     <Container>
@@ -81,9 +86,8 @@ export default () => {
         title='Orbital Frame Jehuty'
         prompt='jehuty>'
         onEnter={handleEnter}
-      >
-        Content
-      </Terminal>
+        history={history}
+      />
     </Container>
   )
 }
