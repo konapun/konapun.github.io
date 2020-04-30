@@ -1,42 +1,14 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Link, graphql } from 'gatsby'
-import NavContext from '../components/nav/NavContext'
-
-import SEO from '../components/SEO'
+import BlogLayout from '../components/layout/BlogLayout'
 
 export default ({ data, pageContext }) => {
   const { markdownRemark: post, allMarkdownRemark: allPosts } = data
   const { previous, next } = pageContext
-  const { setNavigation } = useContext(NavContext)
 
-  const nav = [ // FIXME: this is duplicated in the blog landing page. clean this up
-    {
-      id: 'home',
-      name: 'Home',
-      href: '/'
-    },
-    {
-      id: 'blog',
-      name: 'All Posts',
-      href: '/blog'
-    },
-    ...allPosts.edges.map(({ node }) => ({
-      id: node.fields.slug,
-      name: node.frontmatter.title,
-      href: `/blog${node.fields.slug}`
-    }))
-  ]
-
-  useEffect(() => {
-    setNavigation(nav)
-  }, [ nav, setNavigation ])
-
+  const title = post.frontmatter.title
   return (
-    <div className="mt-5 p-5">
-      <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
-      />
+    <BlogLayout posts={allPosts.edges} seo={title}>
       <article>
         <header className="mb-5">
           <h1>
@@ -80,7 +52,7 @@ export default ({ data, pageContext }) => {
           </li>
         </ul>
       </nav>
-    </div>
+    </BlogLayout>
   )
 }
 

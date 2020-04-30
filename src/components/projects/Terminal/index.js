@@ -8,12 +8,13 @@ import usePrevious from '../../usePrevious'
 
 const noop = () => {}
 
-export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 100, history: userHistory = [] }) => {
-  const mappedUserHistory = useMemo(() => userHistory.map(value => ({ type: 'output', value, text: value })))
+export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 100, output, ...windowProps }) => {
+  const mappedOutput = useMemo(() => [ output ].filter(e => e).map(value => ({ type: 'output', value, text: value })), [ output ])
   const [ value, setValue ] = useState('')
-  const [ history, setHistory ] = useState(mappedUserHistory)
+  const [ history, setHistory ] = useState(mappedOutput)
+  const [ cursorIndex, setCursorIndex ] = useState(0)
   const [ focused, setFocused ] = useState(true)
-  const previousUserHistory = usePrevious(mappedUserHistory)
+  const previousOutput = usePrevious(mappedOutput)
 
   const handleFocus = useCallback(() => {
     setFocused(true)
@@ -42,17 +43,18 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
     const previous = [ ...history ].reverse().find(({ type, value }) => type === 'input')
     if (previous) {
       setValue(previous.value)
+      setCursorIndex(0) // FIXME:
     }
   }, [ history, setValue ])
 
   useEffect(() => {
-    if (!isEqual(mappedUserHistory, previousUserHistory)) {
-      setHistory([ ...history, ...mappedUserHistory ])
+    if (!isEqual(mappedOutput, previousOutput)) {
+      setHistory([ ...history, ...mappedOutput ])
     }
-  }, [ mappedUserHistory, previousUserHistory, history, setHistory])
+  }, [ mappedOutput, previousOutput, history, setHistory])
 
   return (
-    <Window title={title}>
+    <Window title={title} {...windowProps}>
       <ScrollPane>
         <Background onClick={handleFocus}>
           {history.map(({ text }, index) => (
@@ -67,6 +69,7 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
             onChange={handleChange}
             onEnter={handleEnter}
             // onArrowUp={handleArrowUp}
+            // onArrowDown={handleArrowDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />

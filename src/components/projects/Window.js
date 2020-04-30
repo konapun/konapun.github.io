@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components'
 
 const noop = () => {}
 
-export default ({ title, onClose = noop, onMinimize = noop, onMaximize = noop, children }) => (
-  <Window>
+export default ({ title, onClose = noop, onMinimize = noop, onMaximize = noop, width = 'auto', height = 'auto', children }) => (
+  <Window width={width} height={height}>
     <TitleBar>
       <TitleBarText>{title}</TitleBarText>
       <TitleBarControls>
@@ -24,8 +24,9 @@ const Window = styled.div`
   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   background: #c0c0c0;
   padding: 3px;
-  width: 800px;
-  height: 400px;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+
   &::-webkit-scrollbar {
     width: 16px;
   }

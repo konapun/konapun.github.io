@@ -1,34 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Link, graphql } from 'gatsby'
-import NavContext from '../components/nav/NavContext'
-import SEO from '../components/SEO'
+import BlogLayout from '../components/layout/BlogLayout'
 
 export default ({ data }) => {
   const tags = data.allMarkdownRemark.group // TODO: use these
   const posts = data.allMarkdownRemark.edges
-  const { setNavigation } = useContext(NavContext)
 
-  const nav = [
-    {
-      id: 'home',
-      name: 'Home',
-      href: '/'
-    },
-    ...posts.map(({ node }) => ({
-      id: node.fields.slug,
-      name: node.frontmatter.title,
-      href: `/blog${node.fields.slug}`
-    }))
-  ]
-
-  useEffect(() => {
-    setNavigation(nav)
-  }, [ setNavigation, nav ])
-
+  const title = 'All Posts'
   return (
-    <div className="mt-5 p-5">
-      <SEO title='All posts'/>
-      <h2>All Posts</h2>
+    <BlogLayout posts={posts} seo={title}>
+      <h2>{title}</h2>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
@@ -51,7 +32,7 @@ export default ({ data }) => {
           </article>
         )
       })}
-    </div>
+    </BlogLayout>
   )
 }
 
