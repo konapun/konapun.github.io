@@ -11,7 +11,7 @@ export default ({ title, children }) => {
   ])
 
   return (
-    <div>
+    <div className="px-2 py-2">
       <h1>{title}</h1>
       <div>
         {children}

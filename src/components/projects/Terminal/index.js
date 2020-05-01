@@ -12,6 +12,7 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
   const mappedOutput = useMemo(() => [ output ].filter(e => e).map(value => ({ type: 'output', value, text: value })), [ output ])
   const [ value, setValue ] = useState('')
   const [ history, setHistory ] = useState(mappedOutput)
+  const [ accumulator, setAccumulator ] = useState('')
   const [ cursorIndex, setCursorIndex ] = useState(0)
   const [ focused, setFocused ] = useState(true)
   const previousOutput = usePrevious(mappedOutput)
@@ -28,24 +29,37 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
     setValue(event.target.value)
   }, [ setValue ])
 
-  const handleEnter = useCallback(async event => {
+  const handleEnter = useCallback(event => {
     const { value } = event.target
 
     setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), { type: 'input', value, text: `${prompt} ${value}` }])
-    const result = await onEnter(value)
-    if (result) {
-      setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), { type: 'output', value: result, text: result } ])
+
+    if ([ ...value.trim() ].reverse().join()[0] === '\\') {
+      const accumulatorValue = value.replace(/\\\w*$/, '')
+      setAccumulator([ accumulator, accumulatorValue].join('\n'))
+    } else {
+      onEnter([ accumulator, value ].join('\n').trim())
+      setAccumulator('')
     }
     setValue('')
-  }, [ onEnter, prompt, maxScrollback, history, setHistory, setValue ])
+    setCursorIndex(0)
+  }, [ onEnter, prompt, maxScrollback, history, setHistory, setValue, accumulator, setAccumulator ])
 
   const handleArrowUp = useCallback(event => {
-    const previous = [ ...history ].reverse().find(({ type, value }) => type === 'input')
-    if (previous) {
-      setValue(previous.value)
-      setCursorIndex(0) // FIXME:
+    const previousInputs = [ ...history ].reverse().filter(({ type }) => type === 'input')
+    if (cursorIndex < previousInputs.length) {
+      setValue(previousInputs[cursorIndex].value)
+      setCursorIndex(cursorIndex + 1)
     }
-  }, [ history, setValue ])
+  }, [ history, cursorIndex, setValue, setCursorIndex ])
+
+  const handleArrowDown = useCallback(event => {
+    const previousInputs = [ ...history ].reverse().filter(({ type }) => type === 'input')
+    if (cursorIndex > 0) {
+      setValue(previousInputs[cursorIndex - 1].value)
+      setCursorIndex(cursorIndex - 1)
+    }
+  }, [ history, cursorIndex, setValue, setCursorIndex ])
 
   useEffect(() => {
     if (!isEqual(mappedOutput, previousOutput)) {
@@ -68,8 +82,8 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
             prompt={prompt}
             onChange={handleChange}
             onEnter={handleEnter}
-            // onArrowUp={handleArrowUp}
-            // onArrowDown={handleArrowDown}
+            onArrowUp={handleArrowUp}
+            onArrowDown={handleArrowDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
