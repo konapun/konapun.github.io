@@ -51,11 +51,18 @@ const createWebAdapter = ({ handleMessage }) => {
   return [ adapter, notify ]
 }
 
-export default () => {
-  const [ output, setOutput ] = useState('')
+export default ({ input = '' }) => {
+  const [ output, setOutput ] = useState(input)
   const [ adapter, setAdapter ] = useState({})
 
   const handleEnter = useCallback(value => adapter && adapter.notify(value), [ adapter ])
+
+  useEffect(() => {
+    if (input) {
+      setOutput(`jehuty> ${input}`)
+      handleEnter(input)
+    }
+  }, [ input, handleEnter ])
 
   useEffect(() => {
     const [ webAdapter, notifyAdapter ] = createWebAdapter({
