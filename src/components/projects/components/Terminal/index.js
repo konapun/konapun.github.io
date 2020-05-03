@@ -3,8 +3,10 @@ import { isEqual } from 'lodash'
 import styled from 'styled-components'
 import Window from '../Window'
 import ScrollPane from '../ScrollPane'
+import Button from '../Button'
 import Cursor from './Cursor'
-import usePrevious from '../../usePrevious'
+import PopupWindow from './PopupWindow'
+import usePrevious from '../../../usePrevious'
 
 const noop = () => {}
 
@@ -14,12 +16,31 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
   const [ history, setHistory ] = useState(mappedOutput)
   const [ accumulator, setAccumulator ] = useState('')
   const [ cursorIndex, setCursorIndex ] = useState(0)
+  const [ popupVisible, setPopupVisible ] = useState(false)
   const [ focused, setFocused ] = useState(true)
   const previousOutput = usePrevious(mappedOutput)
 
+  const handlePopupClick = useCallback(() => setPopupVisible(true), [ setPopupVisible ])
+
+  const showPopupButton = useMemo(() => (
+    <Button onClick={handlePopupClick}>MULTILINE</Button>
+  ), [ handlePopupClick ])
+
+  const handlePopupCancel = useCallback(() => {
+    setPopupVisible(false)
+  }, [ setPopupVisible ])
+
+  const handlePopupEnter = useCallback(text => {
+    onEnter(text, { print: true })
+    setValue('')
+    setPopupVisible(false)
+  }, [ onEnter, setValue, setPopupVisible ])
+
   const handleFocus = useCallback(() => {
-    setFocused(true)
-  }, [ setFocused ])
+    if (!popupVisible) {
+      setFocused(true)
+    }
+  }, [ popupVisible, setFocused ])
 
   const handleBlur = useCallback(() => {
     setFocused(false)
@@ -45,21 +66,22 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
     setCursorIndex(0)
   }, [ onEnter, prompt, maxScrollback, history, setHistory, setValue, accumulator, setAccumulator ])
 
+  const previousInputs = useMemo(() => [ ...history ].reverse().filter(({ type }) => type === 'input'), [ history ])
+
   const handleArrowUp = useCallback(event => {
-    const previousInputs = [ ...history ].reverse().filter(({ type }) => type === 'input')
     if (cursorIndex < previousInputs.length) {
       setValue(previousInputs[cursorIndex].value)
       setCursorIndex(cursorIndex + 1)
     }
-  }, [ history, cursorIndex, setValue, setCursorIndex ])
+  }, [ previousInputs, cursorIndex, setValue, setCursorIndex ])
+
 
   const handleArrowDown = useCallback(event => {
-    const previousInputs = [ ...history ].reverse().filter(({ type }) => type === 'input')
     if (cursorIndex > 0) {
       setValue(previousInputs[cursorIndex - 1].value)
       setCursorIndex(cursorIndex - 1)
     }
-  }, [ history, cursorIndex, setValue, setCursorIndex ])
+  }, [ previousInputs, cursorIndex, setValue, setCursorIndex ])
 
   useEffect(() => {
     if (!isEqual(mappedOutput, previousOutput)) {
@@ -68,7 +90,7 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
   }, [ mappedOutput, previousOutput, history, setHistory])
 
   return (
-    <Window title={title} {...windowProps}>
+    <Window title={title} controls={[showPopupButton]} {...windowProps}>
       <ScrollPane>
         <Background onClick={handleFocus}>
           {history.map(({ text }, index) => (
@@ -76,6 +98,11 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
               {formatText(text)}
             </Line>
           ))}
+          <PopupWindow
+            visible={popupVisible}
+            onCancel={handlePopupCancel}
+            onEnter={handlePopupEnter}
+          />
           <Cursor
             value={value}
             focused={focused}

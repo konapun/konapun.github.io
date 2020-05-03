@@ -1,21 +1,29 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-// import '98.css'
 
 const noop = () => {}
 
-export default ({ title, onClose = noop, onMinimize = noop, onMaximize = noop, width = 'auto', height = 'auto', children }) => (
+export default ({ title, onClose = noop, onMinimize = noop, onMaximize = noop, width = 'auto', height = 'auto', controls = [], children }) => (
   <Window width={width} height={height}>
     <TitleBar>
       <TitleBarText>{title}</TitleBarText>
       <TitleBarControls>
-        <MinimizeButton aria-label="Minimize" onClick={onMinimize}/>
-        <MaximizeButton aria-label="Maximize" onClick={onMaximize}/>
+        <MinimizeButton disabled aria-label="Minimize" onClick={onMinimize}/>
+        <MaximizeButton disabled aria-label="Maximize" onClick={onMaximize}/>
         <CloseButton aria-label="Close" onClick={onClose}/>
       </TitleBarControls>
     </TitleBar>
     <WindowBody>
-      {children}
+      <ChildContainer>
+        {children}
+      </ChildContainer>
+      {controls.length > 0 && (
+        <ControlArea>
+          {controls.map((control, index) => (
+            <ControlAreaControl key={index}>{control}</ControlAreaControl>
+          ))}
+        </ControlArea>
+      )}
     </WindowBody>
   </Window>
 )
@@ -25,6 +33,7 @@ const Window = styled.div`
   background: #c0c0c0;
   padding: 3px;
   width: ${({ width }) => width};
+  min-height: ${({ height }) => height};
   height: ${({ height }) => height};
 
   &::-webkit-scrollbar {
@@ -95,6 +104,9 @@ const WindowBody = styled.div`
   ${Text}
   margin: 2px;
   height: calc(100% - 25px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
 
   &::-webkit-scrollbar {
     width: 16px;
@@ -108,5 +120,30 @@ const WindowBody = styled.div`
   }
   &::-webkit-scrollbar-track {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='2' height='2' viewBox='0 0 2 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1 0H0V1H1V2H2V1H1V0Z' fill='%23C0C0C0'/%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 0H1V1H0V2H1V1H2V0Z' fill='white'/%3E %3C/svg%3E");
+  }
+`
+
+const ChildContainer = styled.div`
+  flex: 1;
+  height: calc(100% - 25px);
+`
+
+const ControlArea = styled.ul`
+  list-style-type: none;
+  height: 18px;
+  padding: 0px;
+  margin: 0;
+  border: 2px inset #dfdfdf;
+  display: flex;
+  flex-direction: row;
+`
+
+const ControlAreaControl = styled.li`
+  &:not(:last-child) {
+    padding-right: 4px;
+    border-right: 2px inset #dfdfdf;
+  }
+  &:not(:first-child) {
+    padding-left: 4px;
   }
 `

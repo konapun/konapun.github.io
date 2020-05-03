@@ -9,7 +9,7 @@ export default () => {
   const handleTryIt = useCallback(source => {
     // TODO: scroll to top
     setInput(source)
-  }, [ input, setInput ])
+  }, [ setInput ])
 
   return (
     <ProjectLayout

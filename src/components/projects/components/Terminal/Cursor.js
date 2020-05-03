@@ -14,6 +14,8 @@ export default ({ value = '', prompt = '>', onEnter = noop, onArrowUp = noop, on
         return onArrowUp(event)
       case 'ArrowDown':
         return onArrowDown(event)
+      default:
+        return
     }
   }, [ onEnter, onArrowUp, onArrowDown ])
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { isEqual } from 'lodash'
 import NavContext from './NavContext'
 import usePrevious from '../usePrevious'

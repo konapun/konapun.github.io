@@ -1,6 +1,6 @@
 import React from 'react'
 import SEO from '../components/SEO'
-import projects from './projects'
+import projects from '../components/projects/routes'
 
 export default () => {
   return (

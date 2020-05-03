@@ -1,13 +1,27 @@
 import React from 'react'
+import { Link } from 'gatsby'
+import projects from '../../projects/routes'
 
-export default ({ projects }) => (
+export default () => (
   <>
     <h2 className="mb-5">Projects</h2>
     <div className="container">
       <div className="row">
-        <div className="col-sm">
-          Project
-        </div>
+        {projects.map((project, index) => (
+          <div key={index}>
+            <h3>
+              <Link to={`/projects/${project.id}`}>{project.name}</Link>
+            </h3>
+            <p>
+              {project.description}
+            </p>
+            <div className="social-icons social-icons-sm">
+              <a href={project.link} target="_blank">
+                <i className="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </>
