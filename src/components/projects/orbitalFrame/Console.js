@@ -1,9 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import { startCase } from 'lodash'
 import Terminal from '../components/Terminal'
 import orbitalFrame from '@orbital-frame/core'
 import coreCommands from '@orbital-frame/core-commands'
 import errorTrap from '@orbital-frame/plugin-error-trap'
 import didYouMean from '@orbital-frame/plugin-did-you-mean'
+
+const name = 'ifrit'
 
 const createWebAdapter = ({ handleMessage }) => {
   let matcher, callback
@@ -57,7 +60,7 @@ export default ({ input = '' }) => {
 
   const handleEnter = useCallback((value, options = {}) => {
     if (options.print) {
-      setOutput(`jehuty> ${value}`)
+      setOutput(`${name}> ${value}`)
     }
     adapter && adapter.notify(value)
   }, [ adapter ])
@@ -77,7 +80,7 @@ export default ({ input = '' }) => {
 
     setAdapter({ notify: notifyAdapter })
     const bot = orbitalFrame(webAdapter, {
-      name: 'jehuty',
+      name,
       commands: coreCommands,
       plugins: [ didYouMean, errorTrap ]
     })
@@ -86,8 +89,8 @@ export default ({ input = '' }) => {
 
   return (
     <Terminal
-      title='Orbital Frame Jehuty'
-      prompt='jehuty>'
+      title={startCase(`orbital frame ${name}`)}
+      prompt={`${name}>`}
       onEnter={handleEnter}
       output={output}
       height='400px'
