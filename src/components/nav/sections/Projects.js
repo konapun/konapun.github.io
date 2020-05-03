@@ -5,7 +5,7 @@ import projects from '../../projects/routes'
 export default () => (
   <>
     <h2 className="mb-5">Projects</h2>
-    <div className="container">
+    <div className="ml-3">
       <div className="row">
         {projects.map((project, index) => (
           <div key={index}>

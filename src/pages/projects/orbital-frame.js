@@ -3,6 +3,13 @@ import styled from 'styled-components'
 import ProjectLayout from '../../components/layout/ProjectLayout'
 import OrbitalFrameConsole from '../../components/projects/orbitalFrame/Console'
 
+export const metadata = {
+  id: 'orbital-frame',
+  name: 'Orbital Frame',
+  description: 'Unleash the power of UNIX in your chatbot!',
+  link: 'https://github.com/konapun/orbital-frame'
+}
+
 export default () => {
   const [ input, setInput ] = useState('')
 
@@ -14,13 +21,18 @@ export default () => {
   return (
     <ProjectLayout
       title='Orbital Frame'
+      description={metadata.description}
+      link={metadata.link}
     >
       <div>
         <OrbitalFrameConsole input={input}/>
       </div>
       <Examples>
-
+        Examples
       </Examples>
+      <hr/>
+
+      <h1>TODO</h1>
 
       <h2>Commands</h2>
       <span onClick={() => handleTryIt(tryCommand)}>Try It</span>
