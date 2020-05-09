@@ -29,7 +29,7 @@ export default ({ visible = false, onCancel, onEnter }) => {
         controls={windowControls} height='100%'
         onClose={onCancel}
       >
-        <TextArea value={value} onChange={handleChange}/>
+        <TextArea spellCheck={false} value={value} onChange={handleChange}/>
       </Window>
     </Popup>
   )

@@ -5,6 +5,7 @@ import orbitalFrame from '@orbital-frame/core'
 import coreCommands from '@orbital-frame/core-commands'
 import errorTrap from '@orbital-frame/plugin-error-trap'
 import didYouMean from '@orbital-frame/plugin-did-you-mean'
+import extraCommands from './commands'
 
 const name = 'ifrit'
 
@@ -13,6 +14,7 @@ const createWebAdapter = ({ handleMessage }) => {
 
   const notify = text => {
     if (matcher && callback) {
+      console.log('MATCHER:', matcher)
       if (matcher.test(text)) {
         return callback({
           message: {
@@ -81,7 +83,7 @@ export default ({ input = '' }) => {
     setAdapter({ notify: notifyAdapter })
     const bot = orbitalFrame(webAdapter, {
       name,
-      commands: coreCommands,
+      commands: [ ...coreCommands, ...extraCommands ],
       plugins: [ didYouMean, errorTrap ]
     })
     bot.run()

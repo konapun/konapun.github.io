@@ -9,13 +9,19 @@ export default ({ value = '', prompt = '>', onEnter = noop, onArrowUp = noop, on
   const handleKeyDown = useCallback(event => {
     switch (event.key) {
       case 'Enter':
-        return onEnter(event)
+        onEnter(event)
+        break
       case 'ArrowUp':
-        return onArrowUp(event)
+        onArrowUp(event)
+        break
       case 'ArrowDown':
-        return onArrowDown(event)
+        onArrowDown(event)
+        break
       default:
-        return
+        break
+    }
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus()
     }
   }, [ onEnter, onArrowUp, onArrowDown ])
 
@@ -29,6 +35,7 @@ export default ({ value = '', prompt = '>', onEnter = noop, onArrowUp = noop, on
     <Line>
       <Prompt>{prompt}</Prompt>
       <Input
+        spellCheck={false}
         ref={inputRef}
         type="text"
         value={value}
