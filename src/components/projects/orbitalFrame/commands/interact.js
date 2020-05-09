@@ -9,7 +9,6 @@ export default ({ interactionService, configService }) => ({
     const interaction = await interactionService.createInteractionChannel()
 
     const { text: name } = await interaction.prompt('What is your name?')
-    console.log('GOT NAME', name)
     const { text: age } = await interaction.prompt('What is your age?')
     const { text: color } = await interaction.prompt('What is your favorite color?')
 

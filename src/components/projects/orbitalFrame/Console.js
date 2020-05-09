@@ -14,7 +14,6 @@ const createWebAdapter = ({ handleMessage }) => {
 
   const notify = text => {
     if (matcher && callback) {
-      console.log('MATCHER:', matcher)
       if (matcher.test(text)) {
         return callback({
           message: {

@@ -174,9 +174,8 @@ export default () => {
 
       <h2>Signals</h2>
       <p>
-        Commands can be written to respond to signals, such as signals to pause or exit immediately.
+        Commands can be written to respond to signals, such as signals to pause or exit immediately. For full documentation, see the entry in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#signalService" target="_blank">README</a>.
       </p>
-      <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(trySignal)}>Try It</button>
 
       <h2>Functions</h2>
       <p>
@@ -209,23 +208,52 @@ export default () => {
       <p>
         Like Bash, function arguments are given through positional environment variables $1 through $n, so even in the second form where parentheses are used, no parameters can be listed.
       </p>
-      <div className='alert alert-info'>
+      <div className='alert alert-info d-flex justify-content-between'>
         <pre>
           <code>
             <div>
-              {`function say_hello {
-  echo Hello, $1
+              {tryFunction}
+            </div>
+          </code>
+        </pre>
+        <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryFunction)}>Try It</button>
+      </div>
+
+      <h3>Scoping</h3>
+      <p>
+        By default, all variables are declared in the global scope. If you want to instead use lexical scoping, use the local keyword inside your function block:
+      </p>
+      <div className='alert alert-info d-flex justify-content-between'>
+        <pre>
+          <code>
+            <div>
+              {`MY_VAR=outer
+
+function set_var {
+  local MY_VAR=inner
+  echo $MY_VAR
 }
 
-say_hello konapun # displays "Hello, konapun"`}
+set_var # echoes "inner"
+echo $MY_VAR # echoes "outer"`}
             </div>
           </code>
         </pre>
       </div>
-      <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryFunction)}>Try It</button>
-
-      <h2>Control Structures</h2>
-      <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryControlStructure)}>Try It</button>
+      <h3>Control Structures</h3>
+      <p>
+        To keep the syntax simple, the Orbital Frame grammar does not include any control structures such as if statements or loops but these can be easily replicated using commands. Here is an additional example using commands loaded into jehuty which demonstrates how to do branching using the if and and commands rather than dedicated control structures:
+      </p>
+      <div className='alert alert-info d-flex justify-content-between'>
+        <pre>
+          <code>
+            <div>
+              {tryControlStructure}
+            </div>
+          </code>
+        </pre>
+        <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryControlStructure)}>Try It</button>
+      </div>
     </ProjectLayout>
   )
 }
@@ -234,10 +262,14 @@ const tryCommand = '@ifrit echo hello'
 const tryCommandWithOptions = '@ifrit choose -n 2 option1 option2 option3 option4'
 const tryVariable = '@ifrit MY_VAR="a variable"; echo $MY_VAR'
 const tryInterpolation = '@ifrit echo TODO' // TODO
-const tryPipe = "@ifrit echo hello | split -d '' | head -n 4 | join"
+const tryPipe = "@ifrit echo category | split -d '' | head -n 3 | join -g ''"
 const trySignal = '@ifrit echo TODO' // TODO
-const tryInteraction = '@ifrit echo TODO' // TODO
-const tryFunction = `@ifrit function analyze_length {
+const tryInteraction = '@ifrit interact'
+const tryFunction = `@ifrit function say_hello {
+  echo "Hello, " $1
+}
+`
+const tryControlStructure = `@ifrit function analyze_length {
   local WORD=$1
   local LOWER=$2
   local UPPER=$3
@@ -246,4 +278,3 @@ const tryFunction = `@ifrit function analyze_length {
   if $(and $(greater-than $WORD_LENGTH $LOWER) $(less-than $WORD_LENGTH $UPPER)) "String is valid" "String is invalid"
 }
 `
-const tryControlStructure = '@ifrit echo TODO' // TODO
