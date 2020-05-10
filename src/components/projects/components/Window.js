@@ -126,6 +126,7 @@ const WindowBody = styled.div`
 const ChildContainer = styled.div`
   flex: 1;
   height: calc(100% - 25px);
+  min-height: 0;
 `
 
 const ControlArea = styled.ul`
