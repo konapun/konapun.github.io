@@ -16,7 +16,7 @@ export default () => (
               {project.description}
             </p>
             <div className="social-icons social-icons-sm">
-              <a href={project.link} target="_blank">
+              <a href={project.link} target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-github"></i>
               </a>
             </div>

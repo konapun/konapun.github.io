@@ -22,7 +22,7 @@ export default ({ title, description, link, children }) => {
         <h1>{title}</h1>
         {link && (
           <div className="social-icons">
-            <a href={link} target="_blank">
+            <a href={link} target="_blank" rel="noopener noreferrer">
               <i className="fab fa-github"></i>
             </a>
           </div>

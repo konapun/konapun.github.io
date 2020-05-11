@@ -10,11 +10,11 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: 'gatsby-plugin-gtag',
       options: {
         trackingId: 'UA-165913415-1',
-        head: true
-      }
+        head: false
+      },
     },
     {
       resolve: 'gatsby-source-filesystem',

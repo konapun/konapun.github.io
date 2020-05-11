@@ -38,11 +38,11 @@ export default () => {
       </ul>
       <p>
       It is designed to run basically everywhere through the use of adapters. Though it was built with chat services such as Slack and Discord in mind,
-      it can even run on the web as in the demo below which is running entirely client side. For the full project description, see the <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md" target="_blank">README</a>.
+      it can even run on the web as in the demo below which is running entirely client side. For the full project description, see the <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md" target="_blank" rel="noopener noreferrer">README</a>.
       </p>
       <p>
-        The demo below is Orbital Frame running on a custom web adapter with interaction provided through a React terminal emulator. The bot commands are provided by <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core-commands/README.md" target="_blank">@orbital-frame/core-commands</a> which
-        are a set of basic commands to help you get up and running quickly. If you're looking for a prebuilt bot which is able to run on most chat services, check out <a href="https://github.com/konapun/orbital-frame/tree/master/packages/orbital-frame-jehuty" target="_blank">@orbital-frame/jehuty</a> which is configured to run on Hubot.
+        The demo below is Orbital Frame running on a custom web adapter with interaction provided through a React terminal emulator. The bot commands are provided by <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core-commands/README.md" target="_blank" rel="noopener noreferrer">@orbital-frame/core-commands</a> which
+        are a set of basic commands to help you get up and running quickly. If you're looking for a prebuilt bot which is able to run on most chat services, check out <a href="https://github.com/konapun/orbital-frame/tree/master/packages/orbital-frame-jehuty" target="_blank" rel="noopener noreferrer">@orbital-frame/jehuty</a> which is configured to run on Hubot.
         A description of capabilities and examples are given below.
       </p>
       <div ref={demo}>
@@ -68,7 +68,7 @@ export default () => {
 
       <h2>Commands</h2>
       <p>
-        Commands can be called with arguments and options. The options and option types a command accepts are provided by the command's author in the command definition. A detailed explanation for command authors is provided <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Commands" target="_blank">here</a>.
+        Commands can be called with arguments and options. The options and option types a command accepts are provided by the command's author in the command definition. A detailed explanation for command authors is provided <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Commands" target="_blank" rel="noopener noreferrer">here</a>.
       </p>
       <div className='alert alert-info d-flex justify-content-between'>
         <pre>
@@ -129,7 +129,7 @@ export default () => {
 
       <h3>Interactions</h3>
       <p>
-        Some commands start an interactive session where the command can receive nonblocking input throughout its lifespan. The interaction character is configurable based on your bot but defaults to >. For full details, see documentation in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Interactive%20Commands" target="_blank">README</a>:
+        Some commands start an interactive session where the command can receive nonblocking input throughout its lifespan. The interaction character is configurable based on your bot but defaults to >. For full details, see documentation in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Interactive%20Commands" target="_blank" rel="noopener noreferrer">README</a>:
       </p>
       <div className='alert alert-info d-flex justify-content-between'>
         <pre>
@@ -174,7 +174,7 @@ export default () => {
 
       <h2>Signals</h2>
       <p>
-        Commands can be written to respond to signals, such as signals to pause or exit immediately. For full documentation, see the entry in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#signalService" target="_blank">README</a>.
+        Commands can be written to respond to signals, such as signals to pause or exit immediately. For full documentation, see the entry in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#signalService" target="_blank" rel="noopener noreferrer">README</a>.
       </p>
 
       <h2>Functions</h2>
@@ -263,7 +263,6 @@ const tryCommandWithOptions = '@ifrit choose -n 2 option1 option2 option3 option
 const tryVariable = '@ifrit MY_VAR="a variable"; echo $MY_VAR'
 const tryInterpolation = '@ifrit echo TODO' // TODO
 const tryPipe = "@ifrit echo category | split -d '' | head -n 3 | join -g ''"
-const trySignal = '@ifrit echo TODO' // TODO
 const tryInteraction = '@ifrit interact'
 const tryFunction = `@ifrit function say_hello {
   echo "Hello, " $1
