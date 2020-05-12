@@ -39,9 +39,17 @@ module.exports = {
               wrapperStyle: 'margin-bottom: 1.0725rem'
             }
           },
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+              rel: 'noopener noreferrer'
+            }
+          },
           'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
-          'gatsby-remark-smartypants'
+          'gatsby-remark-smartypants',
+          'gatsby-remark-emojis'
         ]
       }
     },
@@ -101,6 +109,7 @@ module.exports = {
         icon: config.manifestIcon // This path is relative to the root of the site.
       }
     },
+    'gatsby-plugin-catch-links',
     'gatsby-plugin-feed',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
