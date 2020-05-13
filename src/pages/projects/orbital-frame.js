@@ -31,6 +31,7 @@ export default () => {
       </p>
       <ul>
         <li>Commands</li>
+        <li>Jobs</li>
         <li>Pipes</li>
         <li>Signals</li>
         <li>Variables</li>
@@ -140,6 +141,54 @@ export default () => {
           </code>
         </pre>
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryInteraction)}>Try It</button>
+      </div>
+
+      <h3>Jobs</h3>
+      <p>
+        When user input is entered it is assigned to a job. A job is in one of four states:
+      </p>
+      <ul>
+        <dl>
+          <dt>Pending</dt>
+          <dd>A job begins its lifecycle in the pending state.</dd>
+          <dt>Running</dt>
+          <dd>Once a job begins execution, it is moved to the running state and remains there until it is either fulfilled or rejected.</dd>
+          <dt>Fulfilled</dt>
+          <dd>Upon success, a job moves to the terminal fulfilled state.</dd>
+          <dt>Rejected</dt>
+          <dd>Upon error, a job moves to the terminal rejected state.</dd>
+        </dl>
+      </ul>
+      <p>
+        Along with its current state, a job contains its ID, a user-local ID, the ID of the user who started the job. The
+        job's context which is used for interaction with the chat service, a command object for the command that belongs to
+        the job, the source code input by the user which spawned the job, the date the job was started, the date the job was
+        finished (or null if the job hasn't reached a terminal state), and the job's output if it is in a finished state.
+      </p>
+
+      <h4>Foregrounding</h4>
+      <p>
+        Because multiple interactive commands can be run at once, you may want to change which job is foregrounded. If you're
+        using @orbital-frame/core-commands, there is a bundled <code>fg</code> command to handle this for you. Otherwise, the
+        source is terse enough to add it yourself:
+      </p>
+      <div className='alert alert-info'>
+        <pre>
+          <code>
+            <div>
+              {`export default ({ jobService, interactionService }) => ({
+  name: 'fg',
+  synopsis: 'fg [JOB ID]',
+  description: 'Foreground an interactive job',
+  async execute ([ jobId ]) {
+    const { userId } = await jobService.findOne({ 'command.pid': this.pid })
+
+    await interactionService.foreground(userId, jobId)
+  }
+})`}
+            </div>
+          </code>
+        </pre>
       </div>
 
       <h2>Pipes</h2>

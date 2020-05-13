@@ -66,6 +66,8 @@ export default ({ input = '' }) => {
     adapter && adapter.notify(value)
   }, [ adapter ])
 
+  const handleMessage = useCallback(message => setOutput(() => message), [])
+
   useEffect(() => {
     if (input) {
       handleEnter(input, { print: true })
@@ -73,11 +75,7 @@ export default ({ input = '' }) => {
   }, [ input, handleEnter ])
 
   useEffect(() => {
-    const [ webAdapter, notifyAdapter ] = createWebAdapter({
-      handleMessage: message => {
-        setOutput(() => message) // FIXME: if the output is the same between messages this won't update
-      }
-    })
+    const [ webAdapter, notifyAdapter ] = createWebAdapter({ handleMessage })
 
     setAdapter({ notify: notifyAdapter })
     const bot = orbitalFrame(webAdapter, {
@@ -86,7 +84,7 @@ export default ({ input = '' }) => {
       plugins: [ didYouMean, errorTrap ]
     })
     bot.run()
-  }, [])
+  }, [ handleMessage ])
 
   return (
     <Terminal
