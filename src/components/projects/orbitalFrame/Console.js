@@ -55,22 +55,20 @@ const createWebAdapter = ({ handleMessage }) => {
   return [ adapter, notify ]
 }
 
-export default ({ input = '' }) => {
-  const [ output, setOutput ] = useState(input)
+export default ({ input = '', maxScrollback = 100 }) => {
+  const [ output, setOutput ] = useState([ input ])
   const [ adapter, setAdapter ] = useState({})
 
-  const handleEnter = useCallback((value, options = {}) => {
-    if (options.print) {
-      setOutput(`${name}> ${value}`)
-    }
+  const handleEnter = useCallback(value => {
+    setOutput(output => [ ...output, `${name}> ${value}` ])
     adapter && adapter.notify(value)
   }, [ adapter ])
 
-  const handleMessage = useCallback(message => setOutput(() => message), [])
+  const handleMessage = useCallback(message => setOutput(output => [ ...output, message ]), [])
 
   useEffect(() => {
     if (input) {
-      handleEnter(input, { print: true })
+      handleEnter(input)
     }
   }, [ input, handleEnter ])
 
@@ -91,7 +89,7 @@ export default ({ input = '' }) => {
       title={startCase(`orbital frame ${name}`)}
       prompt={`${name}>`}
       onEnter={handleEnter}
-      output={output}
+      value={output}
       height='400px'
     />
   )
