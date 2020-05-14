@@ -1,6 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
+import PageTransition from 'gatsby-plugin-page-transitions'
 import DataProvider from '../components/data/DataProvider'
 import NavProvider from '../components/nav/NavProvider'
 import Sidebar from '../components/layout/Sidebar'
@@ -33,7 +34,9 @@ export default ({ children }) => (
           <div className='main-body'>
             <Sidebar/>
             <div className='container-fluid p-0'>
-              {children}
+              <PageTransition>
+                {children}
+              </PageTransition>
             </div>
           </div>
         </NavProvider>

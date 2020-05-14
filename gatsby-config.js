@@ -107,6 +107,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     'gatsby-plugin-offline',
-    'gatsby-plugin-layout'
+    'gatsby-plugin-layout',
+    'gatsby-plugin-page-transitions'
   ]
 }
