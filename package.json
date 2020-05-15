@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@orbital-frame/core": "^0.0.2-alpha.3",
-    "@orbital-frame/core-commands": "^0.0.2-alpha.3",
+    "@orbital-frame/core-commands": "^0.0.2-alpha.4",
     "@orbital-frame/plugin-did-you-mean": "^0.0.2-alpha.3",
     "@orbital-frame/plugin-error-trap": "^0.0.2-alpha.3",
     "gatsby": "^2.20.23",

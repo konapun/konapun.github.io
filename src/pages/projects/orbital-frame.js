@@ -310,7 +310,7 @@ echo $MY_VAR # echoes "outer"`}
 const tryCommand = '@ifrit echo hello'
 const tryCommandWithOptions = '@ifrit choose -n 2 option1 option2 option3 option4'
 const tryVariable = '@ifrit MY_VAR="a variable"; echo $MY_VAR'
-const tryInterpolation = '@ifrit echo TODO' // TODO
+const tryInterpolation = '@ifrit echo "three plus two is " $(calc 3 + 2)'
 const tryPipe = "@ifrit echo category | split -d '' | head -n 3 | join -g ''"
 const tryInteraction = '@ifrit interact'
 const tryFunction = `@ifrit function say_hello {
