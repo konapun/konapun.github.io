@@ -1,24 +1,21 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
-import { isEqual } from 'lodash'
 import styled from 'styled-components'
 import Window from '../Window'
 import ScrollPane from '../ScrollPane'
 import Button from '../Button'
 import Cursor from './Cursor'
 import PopupWindow from './PopupWindow'
-import usePrevious from '../../../usePrevious'
 
 const noop = () => {}
 
-export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 100, output, ...windowProps }) => {
-  const mappedOutput = useMemo(() => [ output ].filter(e => e).map(value => ({ type: 'output', value, text: value })), [ output ])
-  const [ value, setValue ] = useState('')
-  const [ history, setHistory ] = useState(mappedOutput)
-  const [ accumulator, setAccumulator ] = useState('')
-  const [ cursorIndex, setCursorIndex ] = useState(0)
+export default ({ title = 'Terminal', prompt, value: history = [], input = '', onEnter = noop, onArrowUp = noop, onArrowDown = noop, ...windowProps }) => {
+  const [ value, setValue ] = useState(input)
   const [ popupVisible, setPopupVisible ] = useState(false)
   const [ focused, setFocused ] = useState(true)
-  const previousOutput = usePrevious(mappedOutput)
+
+  useEffect(() => {
+    setValue(input)
+  }, [ input ])
 
   const handlePopupClick = useCallback(() => setPopupVisible(true), [ setPopupVisible ])
 
@@ -31,7 +28,7 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
   }, [ setPopupVisible ])
 
   const handlePopupEnter = useCallback(text => {
-    onEnter(text, { print: true })
+    onEnter(text)
     setValue('')
     setPopupVisible(false)
   }, [ onEnter, setValue, setPopupVisible ])
@@ -50,52 +47,18 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
     setValue(event.target.value)
   }, [ setValue ])
 
-  const handleEnter = useCallback(event => {
-    const { value } = event.target
-
-    setHistory([ ...(history.length === maxScrollback ? history.slice(1) : history), { type: 'input', value, text: `${prompt} ${value}` }])
-
-    if ([ ...value.trim() ].reverse().join()[0] === '\\') {
-      const accumulatorValue = value.replace(/\\\w*$/, '')
-      setAccumulator([ accumulator, accumulatorValue].join('\n'))
-    } else {
-      onEnter([ accumulator, value ].join('\n').trim())
-      setAccumulator('')
-    }
+  const handleEnter = useCallback(({target}) => {
+    onEnter(target.value)
     setValue('')
-    setCursorIndex(0)
-  }, [ onEnter, prompt, maxScrollback, history, setHistory, setValue, accumulator, setAccumulator ])
-
-  const previousInputs = useMemo(() => [ ...history ].reverse().filter(({ type }) => type === 'input'), [ history ])
-
-  const handleArrowUp = useCallback(event => {
-    if (cursorIndex < previousInputs.length) {
-      setValue(previousInputs[cursorIndex].value)
-      setCursorIndex(cursorIndex + 1)
-    }
-  }, [ previousInputs, cursorIndex, setValue, setCursorIndex ])
-
-
-  const handleArrowDown = useCallback(event => {
-    if (cursorIndex > 0) {
-      setValue(previousInputs[cursorIndex - 1].value)
-      setCursorIndex(cursorIndex - 1)
-    }
-  }, [ previousInputs, cursorIndex, setValue, setCursorIndex ])
-
-  useEffect(() => {
-    if (!isEqual(mappedOutput, previousOutput)) {
-      setHistory([ ...history, ...mappedOutput ])
-    }
-  }, [ mappedOutput, previousOutput, history, setHistory])
+  }, [ onEnter, setValue ])
 
   return (
     <Window title={title} controls={[showPopupButton]} {...windowProps}>
       <ScrollPane>
         <Background onClick={handleFocus}>
-          {history.map(({ text }, index) => (
+          {history.map((line, index) => (
             <Line key={index}>
-              {formatText(text)}
+              {formatText(line)}
             </Line>
           ))}
           <PopupWindow
@@ -109,8 +72,8 @@ export default ({ title = 'Terminal', prompt, onEnter = noop, maxScrollback = 10
             prompt={prompt}
             onChange={handleChange}
             onEnter={handleEnter}
-            onArrowUp={handleArrowUp}
-            onArrowDown={handleArrowDown}
+            onArrowUp={onArrowUp}
+            onArrowDown={onArrowDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
