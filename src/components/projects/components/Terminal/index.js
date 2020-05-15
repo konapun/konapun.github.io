@@ -8,10 +8,14 @@ import PopupWindow from './PopupWindow'
 
 const noop = () => {}
 
-export default ({ title = 'Terminal', prompt, value: history = [], onEnter = noop, onArrowUp = noop, onArrowDown = noop, ...windowProps }) => {
-  const [ value, setValue ] = useState('')
+export default ({ title = 'Terminal', prompt, value: history = [], input = '', onEnter = noop, onArrowUp = noop, onArrowDown = noop, ...windowProps }) => {
+  const [ value, setValue ] = useState(input)
   const [ popupVisible, setPopupVisible ] = useState(false)
   const [ focused, setFocused ] = useState(true)
+
+  useEffect(() => {
+    setValue(input)
+  }, [ input ])
 
   const handlePopupClick = useCallback(() => setPopupVisible(true), [ setPopupVisible ])
 

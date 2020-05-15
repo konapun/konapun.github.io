@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { startCase } from 'lodash'
 import Terminal from '../components/Terminal'
 import orbitalFrame from '@orbital-frame/core'
@@ -56,15 +56,34 @@ const createWebAdapter = ({ handleMessage }) => {
 }
 
 export default ({ input = '', maxScrollback = 100 }) => {
-  const [ output, setOutput ] = useState([ input ])
+  const [ output, setOutput ] = useState(input ? [ input ] : [])
+  const [ terminalInput, setTerminalInput ] = useState('')
+  const [ cursor, setCursor ] = useState(0)
   const [ adapter, setAdapter ] = useState({})
 
+  const history = useMemo(() => [ ...output ].reverse().filter(({ type }) => type === 'input'), [ output ])
+
+  const handleArrowUp = useCallback(() => {
+    if (cursor < history.length) {
+      setTerminalInput(history[cursor].value)
+      setCursor(cursor + 1)
+    }
+  }, [ cursor, history ])
+
+  const handleArrowDown = useCallback(() => {
+    if (cursor > 0) {
+      setTerminalInput(history[cursor - 1].value)
+      setCursor(cursor - 1)
+    }
+  }, [ cursor, history ])
+
   const handleEnter = useCallback(value => {
-    setOutput(output => [ ...output, `${name}> ${value}` ])
+    setOutput(output => [ ...output, { type: 'input', text: `${name}> ${value}`, value } ])
+    setCursor(0)
     adapter && adapter.notify(value)
   }, [ adapter ])
 
-  const handleMessage = useCallback(message => setOutput(output => [ ...output, message ]), [])
+  const handleMessage = useCallback(message => setOutput(output => [ ...output, { type: 'output', value: message, text: message }]), [])
 
   useEffect(() => {
     if (input) {
@@ -89,7 +108,10 @@ export default ({ input = '', maxScrollback = 100 }) => {
       title={startCase(`orbital frame ${name}`)}
       prompt={`${name}>`}
       onEnter={handleEnter}
-      value={output}
+      onArrowUp={handleArrowUp}
+      onArrowDown={handleArrowDown}
+      value={output.map(({ text }) => text)}
+      input={terminalInput}
       height='400px'
     />
   )
