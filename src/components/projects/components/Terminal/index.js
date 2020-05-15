@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 import Window from '../Window'
 import ScrollPane from '../ScrollPane'
@@ -12,10 +12,17 @@ export default ({ title = 'Terminal', prompt, value: history = [], input = '', o
   const [ value, setValue ] = useState(input)
   const [ popupVisible, setPopupVisible ] = useState(false)
   const [ focused, setFocused ] = useState(true)
+  const scroll = useRef(null)
 
   useEffect(() => {
     setValue(input)
   }, [ input ])
+
+  useEffect(() => {
+    if (scroll && scroll.current) {
+      scroll.current.scrollTop = scroll.current.scrollHeight
+    }
+  }, [ scroll, history ])
 
   const handlePopupClick = useCallback(() => setPopupVisible(true), [ setPopupVisible ])
 
@@ -54,7 +61,7 @@ export default ({ title = 'Terminal', prompt, value: history = [], input = '', o
 
   return (
     <Window title={title} controls={[showPopupButton]} {...windowProps}>
-      <ScrollPane>
+      <ScrollPane ref={scroll}>
         <Background onClick={handleFocus}>
           {history.map((line, index) => (
             <Line key={index}>
