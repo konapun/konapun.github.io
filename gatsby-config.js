@@ -108,6 +108,6 @@ module.exports = {
     'gatsby-plugin-sass',
     'gatsby-plugin-offline',
     'gatsby-plugin-layout',
-    'gatsby-plugin-page-transitions'
+    'gatsby-v2-plugin-page-transitions'
   ]
 }
