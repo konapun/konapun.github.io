@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import { isEqual, noop } from 'lodash'
 import styled from 'styled-components'
 import Window from '../Window'
 import ScrollPane from '../ScrollPane'
 import Button from '../Button'
 import Cursor from './Cursor'
 import PopupWindow from './PopupWindow'
-
-const noop = () => {}
+import usePrevious from '../../../usePrevious'
 
 export default ({ title = 'Terminal', prompt, value: history = [], input = '', onEnter = noop, onArrowUp = noop, onArrowDown = noop, ...windowProps }) => {
   const [ value, setValue ] = useState(input)
@@ -14,15 +14,18 @@ export default ({ title = 'Terminal', prompt, value: history = [], input = '', o
   const [ focused, setFocused ] = useState(true)
   const scroll = useRef(null)
 
+  const previousHistory = usePrevious(history)
+  useEffect(() => {
+    if (!isEqual(history, previousHistory)) {
+      if (scroll && scroll.current) {
+        scroll.current.scrollTop = scroll.current.scrollHeight
+      }
+    }
+  }, [ scroll, history, previousHistory ])
+
   useEffect(() => {
     setValue(input)
   }, [ input ])
-
-  useEffect(() => {
-    if (scroll && scroll.current) {
-      scroll.current.scrollTop = scroll.current.scrollHeight
-    }
-  }, [ scroll, history ])
 
   const handlePopupClick = useCallback(() => setPopupVisible(true), [ setPopupVisible ])
 
