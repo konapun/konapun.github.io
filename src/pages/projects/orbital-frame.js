@@ -38,8 +38,9 @@ export default () => {
         <li>Scripting</li>
       </ul>
       <p>
-      It is designed to run basically everywhere through the use of adapters. Though it was built with chat services such as Slack and Discord in mind,
-      it can even run on the web as in the demo below which is running entirely client side. For the full project description, see the <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md" target="_blank" rel="noopener noreferrer">README</a>.
+        It is designed to run basically everywhere through the use of adapters. Though it was built with chat services such as Slack and Discord in mind,
+        it can even run on the web as in the demo below which is running entirely client side. It features a robust plugin system for further extending bot capabilities beyond what's possible via functions.
+        For the full project description, see the <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md" target="_blank" rel="noopener noreferrer">README</a>.
       </p>
       <p>
         The demo below is Orbital Frame running on a custom web adapter with interaction provided through a React terminal emulator. The bot commands are provided by <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core-commands/README.md" target="_blank" rel="noopener noreferrer">@orbital-frame/core-commands</a> which
@@ -50,7 +51,7 @@ export default () => {
         <OrbitalFrameConsole input={input}/>
       </div>
       <div className="alert alert-info mt-3">
-        <h3>Examples</h3>
+        <h3 className="mt-3">Examples</h3>
         <pre>
           <code>
             <div>
@@ -67,7 +68,7 @@ export default () => {
       </div>
       <hr/>
 
-      <h2>Commands</h2>
+      <h2 className="mt-4">Commands</h2>
       <p>
         Commands can be called with arguments and options. The options and option types a command accepts are provided by the command's author in the command definition. A detailed explanation for command authors is provided <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Commands" target="_blank" rel="noopener noreferrer">here</a>.
       </p>
@@ -82,7 +83,7 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryCommand)}>Try It</button>
       </div>
 
-      <h3>Options</h3>
+      <h3 className="mt-3">Options</h3>
       <p>
         Command options can either be valued or boolean, which is defined in the command itself.Command options can be either short form or long form:
       </p>
@@ -113,7 +114,7 @@ export default () => {
         </pre>
       </div>
 
-      <h3>Interpolations</h3>
+      <h3 className="mt-3">Interpolations</h3>
       <p>
         Commands can be immediately evaluated for use as arguments, option values, etc. by surrounding the command or pipeline with <code>$()</code>:
       </p>
@@ -128,7 +129,7 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryInterpolation)}>Try It</button>
       </div>
 
-      <h3>Interactions</h3>
+      <h3 className="mt-3">Interactions</h3>
       <p>
         Some commands start an interactive session where the command can receive nonblocking input throughout its lifespan. The interaction character is configurable based on your bot but defaults to >. For full details, see documentation in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#Interactive%20Commands" target="_blank" rel="noopener noreferrer">README</a>:
       </p>
@@ -143,7 +144,7 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryInteraction)}>Try It</button>
       </div>
 
-      <h3>Jobs</h3>
+      <h3 className="mt-3">Jobs</h3>
       <p>
         When user input is entered it is assigned to a job. A job is in one of four states:
       </p>
@@ -160,7 +161,7 @@ export default () => {
         </dl>
       </ul>
       <p>
-        Along with its current state, a job contains its ID, a user-local ID, the ID of the user who started the job. The
+        Along with its current state, a job contains its ID, a user-local ID, the ID of the user who started the job, the
         job's context which is used for interaction with the chat service, a command object for the command that belongs to
         the job, the source code input by the user which spawned the job, the date the job was started, the date the job was
         finished (or null if the job hasn't reached a terminal state), and the job's output if it is in a finished state.
@@ -191,7 +192,7 @@ export default () => {
         </pre>
       </div>
 
-      <h2>Pipes</h2>
+      <h2 className="mt-4">Pipes</h2>
       <p>
         Pipes are pipelines of commands (or functions) who pass their output as input into the next pipe.
       </p>
@@ -206,7 +207,7 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryPipe)}>Try It</button>
       </div>
 
-      <h2>Variables</h2>
+      <h2 className="mt-4">Variables</h2>
       <p>
         Variables are key/value pairs:
       </p>
@@ -221,16 +222,16 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryVariable)}>Try It</button>
       </div>
 
-      <h2>Signals</h2>
+      <h2 className="mt-4">Signals</h2>
       <p>
         Commands can be written to respond to signals, such as signals to pause or exit immediately. For full documentation, see the entry in the @orbital-frame/core <a href="https://github.com/konapun/orbital-frame/blob/master/packages/orbital-frame-core/README.md#signalService" target="_blank" rel="noopener noreferrer">README</a>.
       </p>
 
-      <h2>Functions</h2>
+      <h2 className="mt-4">Functions</h2>
       <p>
         Like Bash, the Orbital Frame command line supports two forms of functions which are equivalent in the AST so it's a matter of your personal style:
       </p>
-      <h3>Form 1</h3>
+      <h3 className="mt-3">Form 1</h3>
       <div className='alert alert-info'>
         <pre>
           <code>
@@ -242,7 +243,7 @@ export default () => {
           </code>
         </pre>
       </div>
-      <h3>Form 2</h3>
+      <h3 className="mt-3">Form 2</h3>
       <div className='alert alert-info'>
         <pre>
           <code>
@@ -268,7 +269,7 @@ export default () => {
         <button type='button' className='btn btn-link text-primary' onClick={() => handleTryIt(tryFunction)}>Try It</button>
       </div>
 
-      <h3>Scoping</h3>
+      <h3 className="mt-3">Scoping</h3>
       <p>
         By default, all variables are declared in the global scope. If you want to instead use lexical scoping, use the local keyword inside your function block:
       </p>
@@ -289,9 +290,33 @@ echo $MY_VAR # echoes "outer"`}
           </code>
         </pre>
       </div>
-      <h3>Control Structures</h3>
+      <h3 className="mt-3">Control Structures</h3>
       <p>
-        To keep the syntax simple, the Orbital Frame grammar does not include any control structures such as if statements or loops but these can be easily replicated using commands. Here is an additional example using commands loaded into jehuty which demonstrates how to do branching using the if and and commands rather than dedicated control structures:
+        To keep the syntax simple, the Orbital Frame grammar does not include any control structures such as if statements or loops but these can be easily replicated using commands.
+        @orbital-frame/core-commands includes the following logical commands:
+      </p>
+      <ul>
+        <li>
+          <code>and</code>
+        </li>
+        <li>
+          <code>or</code>
+        </li>
+        <li>
+          <code>not</code>
+        </li>
+        <li>
+          <code>true</code>
+        </li>
+        <li>
+          <code>false</code>
+        </li>
+        <li>
+          <code>if</code>
+        </li>
+      </ul>
+      <p>
+        Here is an additional example using commands loaded into ifrit which demonstrates how to do branching using the if and and commands rather than dedicated control structures:
       </p>
       <div className='alert alert-info d-flex justify-content-between'>
         <pre>

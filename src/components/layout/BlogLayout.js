@@ -17,9 +17,9 @@ export default ({ posts = [], seo, children }) => {
   ])
 
   return (
-    <div className="mt-5 p-5">
-      <SEO title={seo}/>
+    <section className="content-section">
+      <SEO title={seo} className="mb-0"/>
       {children}
-    </div>
+    </section>
   )
 }

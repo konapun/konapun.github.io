@@ -33,7 +33,7 @@ export default ({ children }) => (
           </Helmet>
           <div className='main-body'>
             <Sidebar/>
-            <div className='container-fluid p-0'>
+            <div className='container-fluid p-3 p-lg-5'>
               <PageTransition>
                 {children}
               </PageTransition>

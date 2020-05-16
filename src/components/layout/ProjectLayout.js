@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import useNavigation from '../nav/useNavigation'
 import routes from '../projects/routes'
 
@@ -17,9 +18,9 @@ export default ({ title, description, link, children }) => {
   ])
 
   return (
-    <div className="px-2 py-2 mt-5">
+    <section className="content-section">
       <div className="d-flex justify-content-between">
-        <h1>{title}</h1>
+        <h1 className="mb-0">{title}</h1>
         {link && (
           <div className="social-icons">
             <a href={link} target="_blank" rel="noopener noreferrer">
@@ -34,6 +35,6 @@ export default ({ title, description, link, children }) => {
       <div>
         {children}
       </div>
-    </div>
+    </section>
   )
 }
