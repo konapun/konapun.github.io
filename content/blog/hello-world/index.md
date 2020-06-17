@@ -2,7 +2,7 @@
 title: Hello World
 date: "2020-04-19T03:55:25Z"
 description: "A bit about this site"
-tags: ["About", "Philosophy"]
+tags: ["about", "philosophy"]
 ---
 
 Figured I'd throw a quick site together to host project demos. This site is
