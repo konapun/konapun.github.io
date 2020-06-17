@@ -38,7 +38,7 @@ could be used to handle errors in a uniform way and I agree that this is the bet
 solution. However, the point of this for me was more of a puzzle.
 
 ## What is a Proxy in Javascript?
-[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy](Proxies) were added
+[Proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) were added
 in ES6 as a way of specifying traps for an object. That is, ways you can hook into a defined object to
 intercept calls and provide your own code to run. There are many practical uses for proxies but here we'll
 be using it as a tool to solve the problem stated above.
