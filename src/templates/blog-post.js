@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import BlogLayout from '../components/layout/BlogLayout'
+import TagList from '../components/tags/TagList'
 
 export default ({ data, pageContext }) => {
   const { markdownRemark: post, allMarkdownRemark: allPosts } = data
@@ -22,6 +23,7 @@ export default ({ data, pageContext }) => {
           <p>
             {post.frontmatter.date}
           </p>
+          <TagList location='/blog' tags={post.frontmatter.tags}/>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
       </article>
@@ -66,6 +68,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        tags
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {

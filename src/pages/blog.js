@@ -6,6 +6,7 @@ export default ({ data }) => {
   const tags = data.allMarkdownRemark.group // TODO: use these
   const posts = data.allMarkdownRemark.edges
 
+  console.log('TAGS:', tags)
   const title = 'All Posts'
   return (
     <BlogLayout posts={posts} seo={title}>
@@ -20,6 +21,13 @@ export default ({ data }) => {
                   {title}
                 </Link>
               </h3>
+              <ul>
+                {tags.map(({tag}) => (
+                  <li key={tag} className='label'>
+                    {tag}
+                  </li>
+                ))}
+              </ul>
               <small>{node.frontmatter.date}</small>
             </header>
             <section>

@@ -43,6 +43,22 @@ $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-800 !default;
 
+$accent: $mk-pink;
+$accent-fg: $white;
+
 // Page Variables
 
 $sidebar-base-width: 17rem;
+
+:export {
+  primary: $primary;
+  secondary: $secondary;
+  success: $success;
+  info: $info;
+  warning: $warning;
+  danger: $danger;
+  light: $light;
+  dark: $dark;
+  accent: $accent;
+  accentForeground: $accent-fg;
+}
