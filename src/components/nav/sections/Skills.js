@@ -56,6 +56,18 @@ export default () => (
     <ul className="fa-ul mb-0">
       <li>
         <i className="fa-li fa fa-check"></i>
+        Full Stack Development
+      </li>
+      <li>
+        <i className="fa-li fa fa-check"></i>
+        Microservices
+      </li>
+      <li>
+        <i className="fa-li fa fa-check"></i>
+        Serverless Architecture
+      </li>
+      <li>
+        <i className="fa-li fa fa-check"></i>
         Cross Browser Testing &amp; Debugging
       </li>
       <li>
