@@ -1,16 +1,23 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
+import styled from 'styled-components'
 import BlogLayout from '../components/layout/BlogLayout'
+import TagList from '../components/tags/TagList'
+import querystring from 'query-string'
 
-export default ({ data }) => {
-  const tags = data.allMarkdownRemark.group // TODO: use these
+export default ({ data, location, pageContext }) => {
+  console.log('CONTEXT:', pageContext)
+  const tags = data.allMarkdownRemark.group.map(({tag}) => tag)
   const posts = data.allMarkdownRemark.edges
-
-  console.log('TAGS:', tags)
+  const {tag} = querystring.parse(location.search)
   const title = 'All Posts'
+
   return (
     <BlogLayout posts={posts} seo={title}>
       <h2>{title}</h2>
+      <TagBlock>
+        <TagList location='/blog' tags={tags}/>
+      </TagBlock>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
@@ -21,13 +28,6 @@ export default ({ data }) => {
                   {title}
                 </Link>
               </h3>
-              <ul>
-                {tags.map(({tag}) => (
-                  <li key={tag} className='label'>
-                    {tag}
-                  </li>
-                ))}
-              </ul>
               <small>{node.frontmatter.date}</small>
             </header>
             <section>
@@ -45,8 +45,11 @@ export default ({ data }) => {
 }
 
 export const pageQuery = graphql`
-  query {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+  query($tag: String) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { tags: { in: [$tag] } } }
+    ) {
       edges {
         node {
           excerpt
@@ -66,4 +69,11 @@ export const pageQuery = graphql`
       }
     }
   }
+`
+
+const TagBlock = styled.div`
+  padding: .75rem 0;
+  margin-bottom: 2rem;
+  border: ${({theme}) => `1px solid ${theme.accent.background}`};
+  border-radius: .25rem;
 `
