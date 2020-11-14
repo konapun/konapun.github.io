@@ -45,6 +45,16 @@ Cactus markup, the host language API would be able to pick up the slack to achie
 </ul>
 </li>
 </ul>
+<h2>Rundown</h2>
+<p>After installing Cactus and adding the necessary config, the <code class="language-text">cactus</code> binary will be used to compile a template from the config:</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">cactus compile # reads config in ~/.cactus/cactus.json and runs compilation based on config</code></pre></div>
+<p>If there were no compilation errors, template files will have been added to the Cactus cache. The <code class="language-text">cactus</code> binary can now act on the templates to write a config. This step runs the Javascript files that
+use the Cactus API to interact with the template files.</p>
+<p>In this example, the Javascript files specified a global variable called <code class="language-text">theme</code>. The user has tied the value of this variable to a config object which specifies downstream configuration values for
+various programs which are themable.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">cactus set theme nord</code></pre></div>
+<p>Afer this step, the new dotfiles have been written. Note that running <code class="language-text">cactus compile</code> at this point would compile the newly created dotfiles into a new template (though if this turns out to not be the
+desired behavior we could cache SHAs of the template files to check whether they were modified by a user since being written).</p>
 <h2>Markdown Considerations</h2>
 <p>In order to avoid polluting the config file it lives in it should be placed within comments and use unambiguous start tags as to avoid having to deal with escape sequences. It should be simple but
 powerful; it needs to be able to instruct the compiler how to generate tokens from a config file of any syntax.</p>
@@ -87,9 +97,17 @@ Plug <span class="token string">'clojure-vim/vim-jack-in'</span>
 
 <span class="token keyword">const</span> config <span class="token operator">=</span> <span class="token function">cactus</span><span class="token punctuation">(</span><span class="token string">'./init.vim'</span><span class="token punctuation">)</span>
 
-config<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token string">'variable'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'gruvbox'</span><span class="token punctuation">)</span>
+config<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token string">'colorscheme'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'gruvbox'</span><span class="token punctuation">)</span>
 
 config<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token string">'lisp'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></div>
+<h2>Supported Use Cases</h2>
+<h3>Keeping Static Config Files</h3>
+<p>If you keep a repo of your dotfiles, the most common use case is to maintain the static version of your config and use Cactus to modify portions of it, such as generating a theme.</p>
+<h3>Using Generated Files as Input Files</h3>
+<p>If you like to live on the edge, you may just have your single set of dotfiles not stored in a repo. If this is the case, you can still use Cactus. Rather than using static files from a repo as input,
+Cactus can act on the dotfiles, compile a template, and then run Cactus actions on that template to replace the initial input file. If you decide to go this route be sure not to reference data which may
+be altered by Cactus (such as extracting a value to a variable which may change based on dynamic configuration)!</p>
+<p><code class="language-text">cactus compile</code></p>
 <h2>Proposed Configuration Structures</h2>
 <p>There are three main files involved in a Cactus configuration: a main Cactus config file, a config file with cactus templates, and a javascript file which acts on the template.</p>
 <p>I’ll consider two different structures for organizing a Cactus-federated configuration suite: Centralized and Distributed organization</p>
