@@ -41,6 +41,26 @@ Cactus markup, the host language API would be able to pick up the slack to achie
     * Configuration processing logic is moved from compile time to runtime
     * Configuration processing lives spatially further from the configuration it acts on leading to a greater penchant for Cactus to get out of sync with its config file
 
+## Rundown
+After installing Cactus and adding the necessary config, the `cactus` binary will be used to compile a template from the config:
+
+```sh
+cactus compile # reads config in ~/.cactus/cactus.json and runs compilation based on config
+```
+
+If there were no compilation errors, template files will have been added to the Cactus cache. The `cactus` binary can now act on the templates to write a config. This step runs the Javascript files that
+use the Cactus API to interact with the template files.
+
+In this example, the Javascript files specified a global variable called `theme`. The user has tied the value of this variable to a config object which specifies downstream configuration values for
+various programs which are themable.
+
+```
+cactus set theme nord
+```
+
+Afer this step, the new dotfiles have been written. Note that running `cactus compile` at this point would compile the newly created dotfiles into a new template (though if this turns out to not be the
+desired behavior we could cache SHAs of the template files to check whether they were modified by a user since being written).
+
 ## Markdown Considerations
 In order to avoid polluting the config file it lives in it should be placed within comments and use unambiguous start tags as to avoid having to deal with escape sequences. It should be simple but
 powerful; it needs to be able to instruct the compiler how to generate tokens from a config file of any syntax.
@@ -78,10 +98,21 @@ import cactus from '@cactus/core'
 
 const config = cactus('./init.vim')
 
-config.find('variable').set('gruvbox')
+config.find('colorscheme').set('gruvbox')
 
 config.find('lisp').remove()
 ```
+
+## Supported Use Cases
+### Keeping Static Config Files
+If you keep a repo of your dotfiles, the most common use case is to maintain the static version of your config and use Cactus to modify portions of it, such as generating a theme.
+
+### Using Generated Files as Input Files
+If you like to live on the edge, you may just have your single set of dotfiles not stored in a repo. If this is the case, you can still use Cactus. Rather than using static files from a repo as input,
+Cactus can act on the dotfiles, compile a template, and then run Cactus actions on that template to replace the initial input file. If you decide to go this route be sure not to reference data which may
+be altered by Cactus (such as extracting a value to a variable which may change based on dynamic configuration)!
+
+`cactus compile`
 
 ## Proposed Configuration Structures
 There are three main files involved in a Cactus configuration: a main Cactus config file, a config file with cactus templates, and a javascript file which acts on the template.
