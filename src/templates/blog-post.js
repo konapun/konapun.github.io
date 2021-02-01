@@ -19,6 +19,15 @@ export default ({ data, pageContext }) => {
               {post.frontmatter.description}
             </h4>
           )}
+          <div className="tag-list">
+            {post.frontmatter.tags.map(tag => (
+              <div className='tag tag--small'>
+                <Link to={`/blog/tags/${tag}`}>
+                  {tag}
+                </Link>
+              </div>
+            ))}
+          </div>
           <p>
             {post.frontmatter.date}
           </p>
@@ -66,6 +75,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        tags
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {

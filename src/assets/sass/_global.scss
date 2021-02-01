@@ -94,20 +94,22 @@ p.lead {
 .tag-list {
   display: flex;
   flex-direction: row;
-
-  .tag {
-    flex: 1;
-  }
 }
 
 .tag {
   color: $white;
   background-color: $primary;
+  font-size: .8rem;
   font-weight: 200;
+  min-width: 8rem;
   text-align: center;
   border-radius: 6px;
   margin: 6px;
   padding: 4px;
+
+  &--small {
+    min-width: 5rem;
+  }
 
   &:hover {
     background-color: lighten($primary, 10%);
