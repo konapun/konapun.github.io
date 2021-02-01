@@ -32,6 +32,17 @@ export default ({ data }) => {
           </article>
         )
       })}
+
+      <h3>Tags</h3>
+      <div className='tag-list'>
+        {tags.map(({tag, totalCount}) => (
+          <div className='tag'>
+            <Link to={`/blog/tags/${tag}`}>
+              {`${tag} (${totalCount})`}
+            </Link>
+          </div>
+        ))}
+      </div>
     </BlogLayout>
   )
 }
