@@ -8,7 +8,7 @@ import Sidebar from '../components/layout/Sidebar'
 
 import '../assets/sass/resume.scss'
 
-export default ({ children }) => (
+export default ({ location, children, pageContext }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -32,7 +32,7 @@ export default ({ children }) => (
             <html lang="en" />
           </Helmet>
           <div className='main-body'>
-            <Sidebar/>
+            <Sidebar location={location} context={pageContext} />
             <div className='container-fluid p-3 p-lg-5'>
               <PageTransition>
                 {children}

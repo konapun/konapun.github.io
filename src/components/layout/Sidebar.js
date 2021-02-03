@@ -1,15 +1,18 @@
 import React, { useState, useMemo, useCallback, useContext } from 'react'
 import { Link } from 'gatsby'
 import Scrollspy from 'react-scrollspy'
+import styled from 'styled-components'
 import DataContext from '../data/DataContext'
 import NavContext from '../nav/NavContext'
+import BackArrow from '../nav/BackArrow'
 import Scroll from './Scroll'
 import avatar from './sidebar/avatar.png'
 
-export default function Sidebar () {
+export default ({ context }) => {
   const { firstName, lastName } = useContext(DataContext)
   const { navigation: tabs } = useContext(NavContext)
   const [ expanded, setExpanded ] = useState(false)
+  const back = context.back
 
   const computedNavbarClasses = useMemo(() => expanded ? 'show' : '', [ expanded ])
 
@@ -26,6 +29,9 @@ export default function Sidebar () {
       className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
       id="sideNav"
     >
+      <div id="back-arrow">
+        <BackArrow href={back} />
+      </div>
       <Link className="navbar-brand" to="/#page-top">
         <span className="d-block d-lg-none">
           {firstName} {lastName}
@@ -72,8 +78,19 @@ export default function Sidebar () {
               )}
             </li>
           ))}
+          <li id='back-link' className='nav-item'>
+            <Hr/>
+            <BackArrow className='nav-link' href={back} label='Back' />
+          </li>
         </Scrollspy>
       </div>
     </nav>
   )
 }
+
+const Hr = styled.hr`
+  border-top: .1rem solid rgba(255, 255, 255, 0.3);
+  width: 70%;
+  margin-bottom: .5rem;
+`
+

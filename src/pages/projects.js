@@ -8,7 +8,7 @@ export default () => {
       <SEO title='Projects'/>
       <h2>Projects</h2>
       <p>
-
+        TODO
       </p>
     </div>
   )

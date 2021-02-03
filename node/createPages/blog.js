@@ -48,6 +48,7 @@ exports.createPage = async ({ graphql, actions }) => {
       path,
       component: blogPost,
       context: {
+        back: blogPrefix,
         slug,
         previous,
         next
@@ -57,11 +58,11 @@ exports.createPage = async ({ graphql, actions }) => {
 
   const tags = result.data.tagsGroup.group
   tags.forEach(tag => {
-    console.log('Creating page:', `${blogPrefix}${tag.fieldValue}`)
     createPage({
       path: `${blogPrefix}/tags/${tag.fieldValue}`,
       component: postsByTag,
       context: {
+        back: blogPrefix,
         tag: tag.fieldValue
       }
     })

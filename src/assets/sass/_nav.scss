@@ -9,6 +9,13 @@
       outline-color: lighten($primary, 15%);
     }
   }
+
+  #back-arrow {
+    display: block;
+  }
+  #back-link {
+    display: none;
+  }
 }
 
 @media (min-width: 992px) {
@@ -34,6 +41,14 @@
         border: 0.5rem solid fade-out($white, 0.8);
       }
     }
+
+    #back-arrow {
+      display: none;
+    }
+    #back-link {
+      display: block;
+    }
+
     .navbar-collapse {
       display: flex;
       align-items: flex-start;
