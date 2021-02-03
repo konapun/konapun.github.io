@@ -2,10 +2,12 @@ import React, { useMemo, useContext, useEffect } from 'react'
 import { graphql } from 'gatsby'
 import sections from '../components/nav/sections'
 import NavContext from '../components/nav/NavContext'
-import config from '../../config'
+import DataContext from '../components/data/DataContext'
 
 export default ({ data }) => {
   const { setDefaultNavigation } = useContext(NavContext)
+  const config = useContext(DataContext)
+
   const siteData = useMemo(() => ({
     ...data,
     posts: data?.allMarkdownRemark?.edges

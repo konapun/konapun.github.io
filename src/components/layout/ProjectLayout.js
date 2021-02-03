@@ -1,5 +1,6 @@
 import React from 'react'
 import useNavigation from '../nav/useNavigation'
+import PageLayout from './PageLayout'
 import routes from '../projects/routes'
 
 export default ({ title, description, link, children }) => {
@@ -17,7 +18,7 @@ export default ({ title, description, link, children }) => {
   ])
 
   return (
-    <section className="content-section">
+    <PageLayout title={title}>
       <div className="d-flex justify-content-between">
         <h1 className="mb-0">{title}</h1>
         {link && (
@@ -34,6 +35,6 @@ export default ({ title, description, link, children }) => {
       <div>
         {children}
       </div>
-    </section>
+    </PageLayout>
   )
 }

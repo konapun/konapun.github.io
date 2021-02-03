@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import BlogLayout from '../components/layout/BlogLayout'
+import BlogList from '../components/blog/BlogList'
 
 export default ({ data }) => {
   const tags = data.allMarkdownRemark.group // TODO: use these
@@ -10,28 +11,7 @@ export default ({ data }) => {
   return (
     <BlogLayout posts={posts} seo={title}>
       <h2>{title}</h2>
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <article key={node.fields.slug}>
-            <header>
-              <h3>
-                <Link style={{ boxShadow: `none` }} to={`/blog${node.fields.slug}`}> {/* FIXME */}
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-            </header>
-            <section>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
-            </section>
-          </article>
-        )
-      })}
+      <BlogList posts={posts}/>
 
       <h3>Tags</h3>
       <div className='tag-list'>

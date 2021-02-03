@@ -1,6 +1,6 @@
 import React from 'react'
 import useNavigation from '../nav/useNavigation'
-import SEO from '../SEO'
+import PageLayout from './PageLayout'
 
 export default ({ posts = [], seo, children }) => {
   useNavigation([
@@ -17,9 +17,8 @@ export default ({ posts = [], seo, children }) => {
   ])
 
   return (
-    <section className="content-section">
-      <SEO title={seo} className="mb-0"/>
+    <PageLayout title={seo}>
       {children}
-    </section>
+    </PageLayout>
   )
 }
