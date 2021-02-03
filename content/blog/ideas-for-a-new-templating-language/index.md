@@ -2,7 +2,7 @@
 title: "Ideas For a New Templating Language"
 date: "2020-11-12T21:23:12Z"
 description: "Designing a non-destructive templating system by use of an informed compiler"
-tags: ["dev notes"]
+tags: ["dev notes", "r&d"]
 ---
 
 **ALL INFO IS BRAINSTORMING AND SUBJECT TO CHANGE**
