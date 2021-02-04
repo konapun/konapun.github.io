@@ -8,4 +8,4 @@ yarn.lock
 # Build directory
 /public
 .DS_Store
-tags*
+tags
