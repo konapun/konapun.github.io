@@ -13,7 +13,6 @@ export default ({ data, pageContext }) => {
       <h2>{title}</h2>
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
-        console.log('Post:', node)
         return (
           <article key={node.fields.slug}>
             <header>
