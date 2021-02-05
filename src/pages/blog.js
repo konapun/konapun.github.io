@@ -4,7 +4,7 @@ import BlogLayout from '../components/layout/BlogLayout'
 import BlogList from '../components/blog/BlogList'
 
 export default ({ data }) => {
-  const tags = data.allMarkdownRemark.group // TODO: use these
+  const tags = data.allMarkdownRemark.group
   const posts = data.allMarkdownRemark.edges
 
   const title = 'All Posts'

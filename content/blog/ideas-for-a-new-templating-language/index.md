@@ -44,7 +44,7 @@ Cactus markup, the host language API would be able to pick up the slack to achie
 ## Rundown
 After installing Cactus and adding the necessary config, the `cactus` binary will be used to compile a template from the config:
 
-```sh
+```shell
 cactus compile # reads config in ~/.cactus/cactus.json and runs compilation based on config
 ```
 

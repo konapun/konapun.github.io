@@ -5,11 +5,6 @@ import routes from '../projects/routes'
 
 export default ({ title, description, link, children }) => {
   useNavigation([
-    {
-      id: 'home',
-      name: 'Home',
-      href: '/'
-    },
     ...routes.map(({ id, name }) => ({
       id,
       name,
