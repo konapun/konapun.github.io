@@ -1,6 +1,6 @@
 ---
 title: "Using Functional Features to Improve Code"
-date: "2021-04-02T22:31:12Z"
+date: "2021-02-04T22:31:12Z"
 description: "An example driven solution"
 tags: ["dev notes"]
 ---
