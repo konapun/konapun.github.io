@@ -10,3 +10,4 @@ yarn.lock
 .DS_Store
 tags
 tags.temp
+tags.lock
