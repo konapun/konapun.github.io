@@ -1,6 +1,6 @@
 module.exports = {
   siteTitle: 'konapun.github.io', // <title>
-  siteDescription: 'Personal site for Bremen Braun (@konapun)',
+  siteDescription: 'Personal site for Luke Braun (@konapun)',
   manifestName: 'Resume',
   manifestShortName: 'Landing', // max 12 characters
   manifestStartUrl: '/',
@@ -11,7 +11,7 @@ module.exports = {
   pathPrefix: '/resume', // This path is subpath of your hosting https://domain/portfolio
   blogPrefix: '/blog',
   itemsBeforeOverflow: 3,
-  firstName: 'Bremen',
+  firstName: 'Bremen (Luke)',
   lastName: 'Braun',
   byline: 'The perfect blend of technology and magic',
   socialLinks: [
